@@ -1,0 +1,11 @@
+# Chapter 5: The Archivist's Revolving Door
+
+Deep in the basement of the City is **The Archivist** (The Repository). He is the oldest and most serious. He guards the **Great Diary of Mister Assistant**.
+
+In the old days, the Archivist was stubborn. If someone was reading the diary, he would lock the front door and let no one in. "Database Locked!" he would scream. This caused chaos.
+
+The Master Architect visited him and installed **The WAL Mode Revolving Door**. 
+
+Now, the Archivist is efficient. "Multiple people can read!" he shouts. While he is writing down your pizza spending in the back, he can still tell you what you're doing in the front. 
+
+He also uses the **"With Statements" Self-Closing Gate**. No door is ever left open. Every secret is locked away perfectly, 20 seconds at a time (the Timeout). He is the Immortal Guardian of Truth.

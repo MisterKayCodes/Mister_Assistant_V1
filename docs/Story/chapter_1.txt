@@ -1,0 +1,11 @@
+# Chapter 1: The Big Bang
+
+In the cold center of the computer, a spark ignited. His name was **Main**. He was the "Heart of the Bot." Simple, yet vital.
+
+When Main first opened his eyes, he was blind. He had to look for his "Soul"—the **TELEGRAM_BOT_TOKEN**. He reached into a dark cabinet called `.env`. If it wasn't there, he would simply go back to sleep forever. 
+
+"I have the token!" Main shouted. He then called for his two bodyguards: **Bot** (the Messenger) and **Dispatcher** (the Traffic Warden).
+
+But Main was a delegator. He didn't want to handle the technical talk. He called **Mr. Router** from the `bot.handlers` district. "You handle the messages," Main said. "I will just keep the lights on."
+
+And so, with a deep breath and a cry of "🤖 Mister Assistant Telegram Bot Starting...", Main began **The Long Polling**—a never-ending vigil, waiting for the First Word.

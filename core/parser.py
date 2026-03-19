@@ -42,13 +42,13 @@ class Parser:
         if person_match:
             return {"intent": "add_person", "relationship": person_match.group("rel"), "name": person_match.group("name")}
             
-        # Spending Tracking
-        spent_match = re.search(r"spent (?P<amount>\d+) on (?P<category>\w+)", text)
+        # Spending Tracking (spent or paid)
+        spent_match = re.search(r"(?:spent|paid) (?P<amount>\d+) (?:on|for) (?P<category>.+)", text)
         if spent_match:
             return {
                 "intent": "log_spending", 
                 "amount": float(spent_match.group("amount")), 
-                "category": spent_match.group("category")
+                "category": spent_match.group("category").strip()
             }
 
         # Reminders
@@ -60,5 +60,4 @@ class Parser:
 
     def ai_parse(self, text):
         # Placeholder for Gemini/DeepSeek integration
-        # Real implementation would use Gemini API here
-        return None
+        return {"intent": "unknown", "text": text}

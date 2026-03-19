@@ -1,0 +1,11 @@
+# Chapter 2: The Sunglasses of the Watchman
+
+Outside the Bot's heart, a giant lived. He was called **Watcher**, and he worked for **The Bootstrapper** (run.py). 
+
+Watcher was hyper-sensitive. Every time a fly landed on a file, he would scream "RESTART!" and the Bot would have to wake up all over again. It was a nightmare. The Bot was trying to write in his diary (the database), but every time he touched a page, Watcher saw the ink moving and screamed again.
+
+"Enough!" said the Master Architect. He gave Watchman a pair of **WatcherShield Sunglasses**. 
+
+"Now," the Architect said, "you will only look at the important scrolls—the `.py` code. When the Bot writes in his `data/` folder or updates his `.db` diary, you will look away. You will stay silent."
+
+The Watchman nodded. Now, the Bot could finally work in peace, shielded by the Sunglasses of Silence.

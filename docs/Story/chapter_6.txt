@@ -1,0 +1,13 @@
+# Chapter 6: The Marathon Runner (Activity)
+
+**Mr. Handler** is the first of the four Guild Leaders. He handles **Activity**. 
+
+He is always looking at his watch. When you say "Starting," he runs to the Archivist and says "Open a new page!" He records the exact millisecond you began.
+
+But his true drama is **The Switch**. 
+When you say "Now lunch," he has to do three things at once:
+1. Stop the old activity.
+2. Calculate how long you were doing it.
+3. Start the NEW activity.
+
+He is the most active member of the bot, constantly running back and forth to ensure every second of your life is accounted for.

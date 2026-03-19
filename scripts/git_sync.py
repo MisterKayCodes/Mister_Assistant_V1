@@ -5,6 +5,10 @@ def sync():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     tracking_path = os.path.join(base_dir, "docs/tracking.md")
     
+    if not os.path.exists(os.path.join(base_dir, ".git")):
+        print("[...] Git repository not found. Initializing...")
+        subprocess.run("git init", shell=True, cwd=base_dir)
+
     if not os.path.exists(tracking_path):
         print(f"[!] {tracking_path} not found. Git sync aborted.")
         return

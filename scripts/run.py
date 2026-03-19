@@ -32,17 +32,25 @@ if __name__ == "__main__":
         main_py = os.path.join(base_dir, "main.py")
         
         try:
-            from watchfiles import run_process
+            from watchfiles import run_process, DefaultFilter
+            
+            class WatcherShield(DefaultFilter):
+                def __call__(self, change, path):
+                    # Ignore database, logs, and data folder to prevent infinite restart loops
+                    if "data" in path or path.endswith((".db", ".sqlite", ".log", ".git", ".tmp")):
+                        return False
+                    return super().__call__(change, path)
+
             print(f"[...] Starting bot with hot-reload (Watching: {base_dir})...")
-            # In watchfiles, the target is executed relative to the watched directory
-            run_process(base_dir, target=f"{sys.executable} main.py")
+            # The Master Architect way: Shield the watcher from the DB
+            run_process(base_dir, target=f"{sys.executable} main.py", watch_filter=WatcherShield())
         except ImportError:
             print("[...] Installing 'watchfiles' dependency...")
             subprocess.run([sys.executable, "-m", "pip", "install", "watchfiles"])
             try:
-                from watchfiles import run_process
+                from watchfiles import run_process, DefaultFilter
                 print(f"[...] Starting bot with hot-reload (Watching: {base_dir})...")
-                run_process(base_dir, target=f"{sys.executable} main.py")
+                run_process(base_dir, target=f"{sys.executable} main.py", watch_filter=DefaultFilter())
             except ImportError as e:
                 print(f"[!] Failed to install or import watchfiles. Running without hot-reload. {e}")
                 subprocess.run([sys.executable, main_py])

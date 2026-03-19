@@ -1,7 +1,7 @@
 import sys
 import asyncio
 import logging
-from aiogram import Bot, Dispatcher
+from aiogram import Bot, Dispatcher, types
 from config import TELEGRAM_BOT_TOKEN
 from bot.handlers import router
 
@@ -23,7 +23,6 @@ async def main():
         await bot.session.close()
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     try:
         asyncio.run(main())
     except KeyboardInterrupt:

@@ -1,0 +1,13 @@
+# Chapter 4: The Translator of Manners
+
+Meet **Mr. Logic**. He is the Bot's diplomat. 
+
+Once Mr. Parser (the Riddler) has decided what a message means, he hands it to Logic. Logic doesn't care about databases or regex. He only cares about Feelings and Words.
+
+"Parser says the user started lunch," Logic would say. "I must respond with grace." 
+
+Logic keeps a set of **Speech Scrolls**. 
+- The **Start Scroll**: "⏱️ Tracking [Activity]"
+- The **Switch Scroll**: "✅ Previous activity was [X]m. ⏱️ Now tracking [Y]"
+
+Logic is the reason the Bot feels like a person and not just a machine. He takes the raw data and wraps it in a polite 🤖 message so the User feels heard. He is the master of "The Golden Response."

@@ -24,5 +24,11 @@ class Logic:
     def format_spending_logged(self, amount, category):
         return f"✅ Logged: ₦{amount} - {category} (PalmPay?)"
 
+    def format_check_message(self, name):
+        return f"🤖 Current activity: {name}"
+
+    def format_reminder_set(self, task, time):
+        return f"✅ OK. I'll remind you to {task} {time}."
+
     def format_unknown(self):
         return "🤖 I'm not sure how to handle that yet."

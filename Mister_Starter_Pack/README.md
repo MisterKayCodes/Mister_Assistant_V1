@@ -22,6 +22,11 @@ Run `setup.bat`. This will:
 Double-click `run.bat`. This will:
 - Start your project entry point (`main.py`).
 - Enable **Hot Reload** (the bot restarts automatically when you save changes).
+
+### 🚀 Git Automation
+- **Git Sync** (`scripts/git_sync.py`): Automatically initializes Git if missing, adds all changes, and commits using the message from `docs/tracking.md`.
+- **.gitignore**: Pre-configured to ignore `.env`, databases, and virtual environments.
+
 - Automatically run the **Architecture Inspector** to ensure your code stays clean.
 - Use the **Architecture Debugger** (`scripts/architecture_debugger.py`) to automatically find and fix illegal imports with smart context analysis.
 

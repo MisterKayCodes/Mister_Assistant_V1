@@ -1,0 +1,12 @@
+# Chapter 3: The Riddler of the Gate
+
+Every message from the "Outside World" (Telegram) was a mess of human confusion. To the Bot, it was just Noise. 
+
+At the gates of the City sat **Mr. Parser**. He was the Riddler. Nothing got through without him trying to make sense of it.
+
+"I spent 1000 on pizza," a user would shout.
+Mr. Parser would stroke his chin. He had a set of **Regex Mirrors**. He held up the "Spending Mirror." 
+
+"Aha!" Parser would say. "I see a 'spent', I see a '1000', and I see 'pizza'. This isn't noise. This is a **Log_Spending** intent!"
+
+If the message didn't match any of his mirrors, Parser wouldn't panic (thanks to the Master Architect's "Null Safety" training). He would simply shrug and label it "Unknown." He handed his findings over to the next person in line, never letting an "Empty Platter" through the gate.
