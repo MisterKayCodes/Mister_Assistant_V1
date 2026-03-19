@@ -1,0 +1,36 @@
+bot/
+    __init__.py
+    handlers.py
+    keyboards.py
+core/
+    __init__.py
+    parser.py
+    logic.py
+data/
+    __init__.py
+    repository.py
+services/
+    __init__.py
+    external_api.py
+utils/
+    __init__.py
+    logger.py
+docs/
+    task.md
+    tracking.md
+personal/
+    learning.md
+scripts/
+    architecture_inspector.py
+    git_sync.py
+    run.py
+    setup.bat
+    tree_generator.py
+    tree_structure.txt
+tests/
+    __init__.py
+config.py
+main.py
+.env.example
+requirements.txt
+run.bat

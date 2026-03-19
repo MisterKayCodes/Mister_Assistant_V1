@@ -1,0 +1,35 @@
+import os, re, subprocess, sys
+
+def sync():
+    # Use absolute path to the root since we are in scripts/
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    tracking_path = os.path.join(base_dir, "docs/tracking.md")
+    
+    if not os.path.exists(tracking_path):
+        print(f"[!] {tracking_path} not found. Git sync aborted.")
+        return
+
+    try:
+        with open(tracking_path, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+            if not lines:
+                return
+                
+            for line in reversed(lines):
+                # Match git commit style: | `commit message` | 
+                m = re.search(r'\|\s*`([^`]+)`\s*\|', line)
+                if m:
+                    msg = m.group(1)
+                    print(f"[...] Syncing changes with commit: {msg}")
+                    
+                    # Run git commands in the root directory
+                    subprocess.run("git add .", shell=True, cwd=base_dir)
+                    subprocess.run(f'git commit -m "{msg}"', shell=True, cwd=base_dir)
+                    subprocess.run("git push origin main", shell=True, cwd=base_dir)
+                    print(f"[OK] Sync complete: {msg}")
+                    return
+    except Exception as e:
+        print(f"[!] Sync error: {e}")
+
+if __name__ == "__main__":
+    sync()

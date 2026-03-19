@@ -1,0 +1,26 @@
+.
+├── bot/
+│   └── __init__.py
+├── core/
+│   └── __init__.py
+├── data/
+│   └── __init__.py
+├── services/
+│   └── __init__.py
+├── utils/
+│   └── __init__.py
+├── docs/
+│   ├── task.md
+│   └── tracking.md
+├── scripts/
+│   ├── __init__.py
+│   ├── architecture_inspector.py
+│   ├── architecture_debugger.py
+│   ├── run.py
+│   ├── setup.bat
+│   └── tree_structure.txt
+├── config.py
+├── main.py
+├── requirements.txt
+├── .env.example
+└── run.bat
