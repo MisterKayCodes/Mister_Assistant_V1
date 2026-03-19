@@ -1,9 +1,19 @@
-# Chapter 7: The Witness of Names (People)
+# Chapter 7: The Master of Coins
 
-The second Guild Leader is **The Witness**. He doesn't care about time or money; he only cares about **Connections**.
+Next to the Keeper of Hours sits **The Master of Coins (Repository Spending)**. He is a simpler man, but very precise. He only cares about **Wealth and Value**.
 
-When you say "My sister is Chichi," The Witness steps forward. He takes out a special scroll called **The People Table**. 
+When the user speaks of spending, The Master of Coins opens the **Golden Ledger** (The Spending Table). He assumes that unless you are a king, you are using the commoners' bank: **PalmPay**.
 
-"Aha," he says. "A new soul for my directory." 
+```python
+    def log_spending(self, user_id, amount, category, date=None, payment_method="PalmPay"):
+        if not date:
+            date = datetime.now().strftime("%Y-%m-%d") # Today!
+        cursor = self.conn.cursor()
+        cursor.execute(
+            "INSERT INTO spending (user_id, amount, category, date, payment_method) VALUES (?, ?, ?, ?, ?)",
+            (user_id, amount, category, date, payment_method)
+        )
+        self.conn.commit()
+```
 
-He records the name and the relationship. He is the Bot's heart. He ensures that the Bot doesn't just treat you as a user, but as a person with a life and family. Without The Witness, the Bot would be a cold Calculator. With him, the Bot is a Companion.
+He doesn't ask questions. He only records the truth of the sacrifice. ₦1000 for bread, ₦5000 for fuel. Every coin is tracked, and every coin is committed to the eternal stone of the database. He is the guardian of your prosperity.

@@ -1,9 +1,17 @@
-# Chapter 8: The Banker of PalmPay (Spending)
+# Chapter 8: The Oracle of Tomorrow
 
-**The Banker** is the third Guild Leader. He is strict and precise. He handles the **Spending Table**.
+The final specialist in the basement is **The Oracle (Repository Reminders)**. He doesn't look at the past; he looks at **The Whispering Future**.
 
-He has a special agreement with **Mr. Parser**. Every time a "spent" or "paid" message arrives, The Banker is summoned. 
+When a user says "Remind me," The Oracle takes a **Parchment of the Future** and writes down the whisper and the moment it should be spoken:
 
-"₦1000 for transport," he mutters. He records the amount and the category. But he is also a creature of habit. "I shall assume this was done via **PalmPay**," he declares, unless told otherwise.
+```python
+    def set_reminder(self, user_id, text, reminder_date, recurring=False):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            "INSERT INTO reminders (user_id, text, reminder_date, recurring) VALUES (?, ?, ? , ?)",
+            (user_id, text, reminder_date, recurring)
+        )
+        self.conn.commit()
+```
 
-The Banker ensures that at the end of the month, you know where every coin went. He is the silent accountant living inside the wires.
+The Oracle is a silent waiter. He puts the "whisper" into the vault and waits for the clock to strike. He is the bridge between the Bot's present action and your future destiny. Without him, the Bot would forget everything once the sun sets. With him, the Bot is an Eternal Watcher.

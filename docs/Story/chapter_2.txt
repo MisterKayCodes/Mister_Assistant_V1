@@ -1,11 +1,29 @@
-# Chapter 2: The Sunglasses of the Watchman
+# Chapter 2: The Watchman and The Inspector
 
-Outside the Bot's heart, a giant lived. He was called **Watcher**, and he worked for **The Bootstrapper** (run.py). 
+Beyond the heart stood **The Bootstrapper (run.py)**. He was the one who actually built the world before Main could wake up. 
 
-Watcher was hyper-sensitive. Every time a fly landed on a file, he would scream "RESTART!" and the Bot would have to wake up all over again. It was a nightmare. The Bot was trying to write in his diary (the database), but every time he touched a page, Watcher saw the ink moving and screamed again.
+He used a specialist called **The Inspector (architecture_inspector.py)**. The Inspector had a list of the "Organism's" vital organs. He would scan the directory to make sure every folder (`core`, `bot`, `data`) was in the right place:
 
-"Enough!" said the Master Architect. He gave Watchman a pair of **WatcherShield Sunglasses**. 
+```python
+    if scan_organism():
+        # The Inspector says we are healthy!
+        ...
+```
 
-"Now," the Architect said, "you will only look at the important scrolls—the `.py` code. When the Bot writes in his `data/` folder or updates his `.db` diary, you will look away. You will stay silent."
+If the Inspector found a missing limb, he would scream for **The Debugger**. But if the body was whole, the Bootstrapper summoned **The Watchman (watchfiles)**.
 
-The Watchman nodded. Now, the Bot could finally work in peace, shielded by the Sunglasses of Silence.
+The Watchman was dangerous. He would restart the entire world if he saw a single change. To keep things stable, the Architect gave him **The Shield (WatcherShield)**:
+
+```python
+    class WatcherShield(DefaultFilter):
+        def __call__(self, change, path):
+            if "data" in path or path.endswith((".db", ".sqlite", ".log", ".git", ".tmp")):
+                return False # IGNORE the noise!
+            return super().__call__(change, path)
+```
+
+With his Shield, the Watchman became the Bot's protector. He would only restart the heart if the Code changed, allowing the Bot's memory (the database) to grow in silence:
+
+```python
+    run_process(base_dir, target=f"{sys.executable} main.py", watch_filter=WatcherShield())
+```

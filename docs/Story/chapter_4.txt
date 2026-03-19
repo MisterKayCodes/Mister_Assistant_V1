@@ -1,13 +1,30 @@
-# Chapter 4: The Translator of Manners
+# Chapter 4: The Diplomatic Strategist
 
-Meet **Mr. Logic**. He is the Bot's diplomat. 
+Once the Riddler has done his job, he has a label like "Log_Spending" or "Start_Activity." But the machine's internal records are cold and ugly. 
 
-Once Mr. Parser (the Riddler) has decided what a message means, he hands it to Logic. Logic doesn't care about databases or regex. He only cares about Feelings and Words.
+Enter **The Strategist (Logic.py)**. He is the master of the "User Experience." He takes the cold facts and wraps them in a warm 🤖 response.
 
-"Parser says the user started lunch," Logic would say. "I must respond with grace." 
+When the Bot successfully starts a task, the Strategist chooses a **Scroll of Confirmation**:
 
-Logic keeps a set of **Speech Scrolls**. 
-- The **Start Scroll**: "⏱️ Tracking [Activity]"
-- The **Switch Scroll**: "✅ Previous activity was [X]m. ⏱️ Now tracking [Y]"
+```python
+    def format_start_message(self, name):
+        return f"⏱️ Tracking {name}"
+```
 
-Logic is the reason the Bot feels like a person and not just a machine. He takes the raw data and wraps it in a polite 🤖 message so the User feels heard. He is the master of "The Golden Response."
+If the Bot switch activities, the Strategist performs a "Summation" ritual, calculating the minutes before starting the next task:
+
+```python
+    def format_switch_message(self, prev_duration_seconds, next_name):
+        res = ""
+        if prev_duration_seconds is not None:
+            mins = prev_duration_seconds // 60
+            res = f"✅ Previous activity was {mins}m. "
+        return res + f"⏱️ Now tracking {next_name}"
+```
+
+He is the "Voice" of the Assistant. He ensures that every interaction feels polished and professional. He even has a "Safety Scroll" for when things go wrong:
+
+```python
+    def format_unknown(self):
+        return "🤖 I'm not sure how to handle that yet."
+```

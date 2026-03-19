@@ -1,11 +1,34 @@
-# Chapter 1: The Big Bang
+# Chapter 1: The Heartbeat of the Machine
 
-In the cold center of the computer, a spark ignited. His name was **Main**. He was the "Heart of the Bot." Simple, yet vital.
+In the dark void of the folder, **Main.py** woke up. He was the center of everything, the master coordinator.
 
-When Main first opened his eyes, he was blind. He had to look for his "Soul"—the **TELEGRAM_BOT_TOKEN**. He reached into a dark cabinet called `.env`. If it wasn't there, he would simply go back to sleep forever. 
+First, Main needed his "Oxygen"—the **TELEGRAM_BOT_TOKEN**. He reached into the `.env` scroll using this ancient ritual:
 
-"I have the token!" Main shouted. He then called for his two bodyguards: **Bot** (the Messenger) and **Dispatcher** (the Traffic Warden).
+```python
+load_dotenv()
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+```
 
-But Main was a delegator. He didn't want to handle the technical talk. He called **Mr. Router** from the `bot.handlers` district. "You handle the messages," Main said. "I will just keep the lights on."
+If the oxygen was missing, Main would die instantly. But once he breathed, he summoned his two generals: **Bot** (the Messenger) and **Dispatcher** (the Traffic Warden).
 
-And so, with a deep breath and a cry of "🤖 Mister Assistant Telegram Bot Starting...", Main began **The Long Polling**—a never-ending vigil, waiting for the First Word.
+```python
+    bot = Bot(token=TELEGRAM_BOT_TOKEN)
+    dp = Dispatcher()
+```
+
+Main didn't want to handle every citizen's request himself. He called for **The Router**, a specialist from the `bot.handlers` district. He told the Warden to listen to the Router:
+
+```python
+    dp.include_router(router)
+```
+
+Finally, with a loud cry of "🤖 Bot Starting...", Main entered the **Eternal Vigil** (The Polling Loop). He would now wait forever for a message to arrive from the Great Telegram Cloud:
+
+```python
+    try:
+        await dp.start_polling(bot)
+    except Exception as e:
+        print(f"[!] Error: {e}")
+```
+
+Main was the heart. He kept the blood flowing, but he left the thinking to others.

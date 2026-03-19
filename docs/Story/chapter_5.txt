@@ -1,11 +1,27 @@
-# Chapter 5: The Archivist's Revolving Door
+# Chapter 5: The Immortal Archivist (The Vault)
 
-Deep in the basement of the City is **The Archivist** (The Repository). He is the oldest and most serious. He guards the **Great Diary of Mister Assistant**.
+Deep beneath the City lives **The Archivist (Repository)**. He is the one who remembers everything. He manages the **Vault of SQLite**.
 
-In the old days, the Archivist was stubborn. If someone was reading the diary, he would lock the front door and let no one in. "Database Locked!" he would scream. This caused chaos.
+In the old world, the Archivist was solitary. If he was writing, no one else could even look at the vault. But the Architect rebuilt him with the **Revolving Door (WAL Mode)**:
 
-The Master Architect visited him and installed **The WAL Mode Revolving Door**. 
+```python
+    self.conn = sqlite3.connect(DB_PATH, timeout=20, check_same_thread=False)
+    # Enable WAL mode for better concurrency
+    self.conn.execute("PRAGMA journal_mode=WAL")
+```
 
-Now, the Archivist is efficient. "Multiple people can read!" he shouts. While he is writing down your pizza spending in the back, he can still tell you what you're doing in the front. 
+The Archivist's first job is the **Creation of the Scrolls** (The Tables). He carves the structure of the world into stone:
 
-He also uses the **"With Statements" Self-Closing Gate**. No door is ever left open. Every secret is locked away perfectly, 20 seconds at a time (the Timeout). He is the Immortal Guardian of Truth.
+```python
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS activities (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id TEXT,
+                name TEXT,
+                start_time TIMESTAMP,
+                ...
+            )
+        """)
+```
+
+He uses the **"Atomic Promise" (conn.commit)** to ensure that if he starts writing, he finishes correctly. Every connection is a single, eternal link (the `self.conn` instance) that never dies as long as the Bot is awake.

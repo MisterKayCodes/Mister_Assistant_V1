@@ -1,7 +1,23 @@
-# Chapter 9: The Whispering Wind (Reminders)
+# Chapter 9: The Weaving of Souls (The Router)
 
-The fourth and final Guild Leader is **The Whispering Wind**. He handles **Reminders**.
+Back in the upper city of `bot/handlers.py`, **The Great Router** is weaving the many threads of the specialists together. He is the **Middleman of Fate**.
 
-He is the most mysterious. When you say "Remind me to call sister tomorrow," he doesn't do anything immediately. He just leans towards the Archivist and whispers, "Put this in the future scroll." 
+When a message arrives, the Router calls the **Main Handler**. This handler is the "Brain of the Day." It starts with the **Scrubbing Ritual** (Parsing) and then checks the **Scroll of Intent**.
 
-He is a creature of time. He waits in the shadows of the code, watching the seconds tick by. When the time is right, he will wake up, fly through the wires, and whisper in your ear. He is the guardian of your promises. Without him, the Bot would only live in the Past. With him, the Bot lives in the Future.
+It performs the **Switching Ritual** for Activities:
+
+```python
+    if intent == "start_activity":
+        repo.start_activity(user_id, parsed.get("name"))
+        response = logic.format_start_message(parsed.get("name"))
+    
+    elif intent == "switch_activity":
+        active_id = repo.get_active_activity(user_id)
+        duration = None
+        if active_id:
+            duration = repo.stop_activity(active_id)
+        repo.start_activity(user_id, parsed.get("name"))
+        response = logic.format_switch_message(duration, parsed.get("name"))
+```
+
+The Router is the one who decides WHICH specialist to call. He is the director of the play. If he sees "Spending," he calls the Banker. If he sees "Unknown," he calls the Strategist for an apology. He is the one who turns individual functions into a living, breathing **Bot**.

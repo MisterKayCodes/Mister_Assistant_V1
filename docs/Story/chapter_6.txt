@@ -1,13 +1,36 @@
-# Chapter 6: The Marathon Runner (Activity)
+# Chapter 6: The Keeper of Hours
 
-**Mr. Handler** is the first of the four Guild Leaders. He handles **Activity**. 
+Inside the Archivist's (Repository) great basement, there is a specialized scribe called **The Keeper of Hours**. He handles the **Activities**.
 
-He is always looking at his watch. When you say "Starting," he runs to the Archivist and says "Open a new page!" He records the exact millisecond you began.
+When The Riddler (Parser) says "Start Activity," The Keeper of Hours is summoned. He opens the vault and writes a **New Line of Existence**:
 
-But his true drama is **The Switch**. 
-When you say "Now lunch," he has to do three things at once:
-1. Stop the old activity.
-2. Calculate how long you were doing it.
-3. Start the NEW activity.
+```python
+    def start_activity(self, user_id, name):
+        cursor = self.conn.cursor()
+        start_time = datetime.now()
+        cursor.execute(
+            "INSERT INTO activities (user_id, name, start_time) VALUES (?, ?, ?)",
+            (user_id, name, start_time)
+        )
+        activity_id = cursor.lastrowid
+        self.conn.commit()
+        ...
+        return activity_id
+```
 
-He is the most active member of the bot, constantly running back and forth to ensure every second of your life is accounted for.
+But his true masterwork is **The Paradox of Switching**. When you switch activities, the Keeper must freeze time for the old one and calculate its life span (the duration) before breathing life into the new one:
+
+```python
+    def stop_activity(self, activity_id):
+        cursor = self.conn.cursor()
+        end_time = datetime.now()
+        ... # Calculate total seconds
+        duration = int((end_time - start_time).total_seconds())
+        cursor.execute(
+            "UPDATE activities SET end_time = ?, duration = ? WHERE id = ?",
+            (activity_id, duration)
+        )
+        self.conn.commit()
+```
+
+He is the reason you know how much of your life was spent "Coding" and how much was spent "Resting." He is the accountant of your very existence.
