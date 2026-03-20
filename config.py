@@ -18,3 +18,6 @@ DB_PATH = os.path.join(os.path.dirname(__file__), "data", "mister_assistant.db")
 # Logic Configuration
 MAX_ACTIVITY_DURATION_HOURS = 8
 DEFAULT_REMINDER_TIME = "09:00"
+
+# Logging Configuration
+LOG_FILE = os.path.join(os.path.dirname(__file__), "mister_assistant.log")

@@ -4,6 +4,11 @@ import logging
 from aiogram import Bot, Dispatcher, types
 from config import TELEGRAM_BOT_TOKEN
 from bot.handlers import router
+from utils.logger import setup_logging
+
+# Rule 10: Observability
+setup_logging()
+logger = logging.getLogger(__name__)
 
 async def main():
     if not TELEGRAM_BOT_TOKEN:
