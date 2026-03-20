@@ -25,7 +25,8 @@ class Repository:
                 name TEXT,
                 start_time TIMESTAMP,
                 end_time TIMESTAMP,
-                duration INTEGER
+                duration INTEGER,
+                photo_paths TEXT -- JSON array of relative paths
             )
         """)
         
@@ -72,7 +73,18 @@ class Repository:
                 current_activity_id INTEGER,
                 last_person_id INTEGER,
                 last_intent TEXT,
-                last_activity_name TEXT
+                last_activity_name TEXT,
+                state_context TEXT -- e.g. 'WAITING_FOR_CAPTION'
+            )
+        """)
+
+        # Pending Media table (Phase 2 Durable State)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS pending_media (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id TEXT,
+                file_path TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         """)
         self.conn.commit()
@@ -176,3 +188,51 @@ class Repository:
         cursor.execute("SELECT name FROM activities WHERE id = ?", (activity_id,))
         row = cursor.fetchone()
         return row[0] if row else "Unknown"
+
+    # --- Phase 2: Media Management ---
+    def add_pending_media(self, user_id, file_path):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            "INSERT INTO pending_media (user_id, file_path) VALUES (?, ?)",
+            (user_id, file_path)
+        )
+        self.conn.commit()
+
+    def get_pending_media(self, user_id):
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT file_path FROM pending_media WHERE user_id = ?", (user_id,))
+        rows = cursor.fetchall()
+        return [row[0] for row in rows]
+
+    def clear_pending_media(self, user_id):
+        cursor = self.conn.cursor()
+        cursor.execute("DELETE FROM pending_media WHERE user_id = ?", (user_id,))
+        self.conn.commit()
+
+    def save_activity_with_photos(self, user_id, name, photo_paths):
+        """Saves an activity with a list of photo paths as a JSON string."""
+        cursor = self.conn.cursor()
+        start_time = datetime.now()
+        paths_json = json.dumps(photo_paths)
+        cursor.execute(
+            "INSERT INTO activities (user_id, name, start_time, photo_paths) VALUES (?, ?, ?, ?)",
+            (user_id, name, start_time, paths_json)
+        )
+        activity_id = cursor.lastrowid
+        self.conn.commit()
+        self.update_user_state(user_id, current_activity_id=activity_id, last_activity_name=name, state_context=None)
+        return activity_id
+
+    def check_path_exists(self, relative_path):
+        """Checks if a file path is mentioned in activities or pending_media."""
+        cursor = self.conn.cursor()
+        # Check pending_media
+        cursor.execute("SELECT id FROM pending_media WHERE file_path = ?", (relative_path,))
+        if cursor.fetchone(): return True
+        
+        # Check activities (using LIKE because it's in a JSON array string)
+        # Rule: SQLite JSON extracts are better but LIKE works for simple relative paths
+        cursor.execute("SELECT id FROM activities WHERE photo_paths LIKE ?", (f'%{relative_path}%',))
+        if cursor.fetchone(): return True
+        
+        return False

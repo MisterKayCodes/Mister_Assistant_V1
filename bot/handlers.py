@@ -1,18 +1,23 @@
-from aiogram import Router, types
+from aiogram import Router, types, F
 from aiogram.filters import Command
 from core.parser import Parser
 from core.logic import Logic
 from data.repository import Repository
+from services.media_manager import MediaManager
 
 router = Router()
 parser = Parser()
 logic = Logic()
 repo = Repository()
+manager = MediaManager()
 
 @router.message(Command("start"))
 async def start_handler(message: types.Message):
-    print(f"DEBUG: /start command received from {message.from_user.id}")
-    await message.answer("🤖 **Mister Assistant Phase 1 Online!**\n\nI can track your activities, spending, and remember people. Try saying 'starting coding' or 'spent 500 on lunch'!")
+    user_id = str(message.from_user.id)
+    repo.clear_pending_media(user_id)
+    repo.update_user_state(user_id, state_context=None)
+    print(f"DEBUG: /start command received from {user_id}")
+    await message.answer("🤖 **Mister Assistant Phase 2 Online!**\n\nI can now see and remember. Send me a photo to log an activity with visual evidence, or just chat as usual!")
 
 @router.message()
 async def telegram_handler(message: types.Message):
