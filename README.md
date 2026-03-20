@@ -15,6 +15,20 @@ The project follows a flat, modular structure for maximum clarity:
 - **`utils/`**: Shared helpers and logging.
 - **`docs/`**: Project roadmap and session tracking.
 - **`scripts/`**: Maintenance and automation tools.
+- **`Mister_Starter_Pack/`**: Templates and prompts for new project generation.
+
+---
+
+## 📜 The Project Rulebook (`docs/rulebook.md`)
+
+Mister Assistant is governed by a strict **18-Rule Architectural DNA** to prevent spaghetti code and ensure long-term stability:
+
+1. **Anatomy Control**: `core/` (Brain) must NEVER touch `aiogram` or SQL.
+2. **Durable State**: No temporary RAM variables for critical state.
+3. **The Escape Hatch**: Any command starting with `/` clears pending states.
+4. **Boring is Good**: Readability over cleverness.
+
+See the full [rulebook.md](file:///c:/Kaycris/Mister_Assistant_V2/docs/rulebook.md) for details.
 
 ---
 

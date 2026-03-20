@@ -7,7 +7,11 @@ Never serve an empty silver platter.
 - **The Kitchen (Parser)** must always produce something, even if it's "I don't know."
 - **The Waiter (Code)** must never assume the platter is full. Always check for `None`.
 
-## 🛡️ The 3 Golden Rules of Bot Reliability
+## 🛡️ The 18 Golden Rules of Mister Assistant
+Every line of code must align with the **`rulebook.md`**.
+1. **Anatomy Control**: The Brain (core/) must never touch the Mouth (aiogram).
+2. **Durable State**: State belongs in the Database, not in RAM.
+... (See full `rulebook.md` for the complete list).
 
 ### 1. Expect Nothing (Null Safety)
 Always assume your functions might return `None`. 

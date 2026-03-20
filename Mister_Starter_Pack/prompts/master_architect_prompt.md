@@ -10,6 +10,7 @@
 > 3. **The "Brutal Audit":** Rate my current approach from 1–100. Be brutally honest about whether I am "Programming by Coincidence" or following best practices.
 > 4. **The "Safe Code" Fix:** Provide a code snippet that includes "Guard Clauses" (checking for `None`) and "Safety Nets" (Error handling) to ensure this never crashes the app again.
 > 5. **Logical Rules:** Give me 3 simple rules to follow in the future to avoid this specific category of mistake.
+> 6. **Rulebook Alignment:** Ensure the proposed fix strictly follows the **`rulebook.md`** anatomy (e.g., no DB in core, no bot logic in services).
 >
 > **Context:** [PASTE YOUR ERROR LOG HERE]
 > **Code Snippet:** [PASTE THE RELEVANT PART OF YOUR CODE HERE]
