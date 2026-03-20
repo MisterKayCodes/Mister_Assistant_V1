@@ -26,11 +26,15 @@ def sync():
                     msg = m.group(1)
                     print(f"[...] Syncing changes with commit: {msg}")
                     
+                    # Get current branch
+                    branch_res = subprocess.run("git branch --show-current", shell=True, capture_output=True, text=True, cwd=base_dir)
+                    branch = branch_res.stdout.strip() or "master"
+                    
                     # Run git commands in the root directory
                     subprocess.run("git add .", shell=True, cwd=base_dir)
                     subprocess.run(f'git commit -m "{msg}"', shell=True, cwd=base_dir)
-                    subprocess.run("git push origin main", shell=True, cwd=base_dir)
-                    print(f"[OK] Sync complete: {msg}")
+                    subprocess.run(f"git push origin {branch}", shell=True, cwd=base_dir)
+                    print(f"[OK] Sync complete: {msg} on {branch}")
                     return
     except Exception as e:
         print(f"[!] Sync error: {e}")
