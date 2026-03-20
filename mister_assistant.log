@@ -1,0 +1,11 @@
+2026-03-20 13:01:56,428 - aiogram.dispatcher - INFO - Start polling
+2026-03-20 13:01:59,354 - aiogram.dispatcher - INFO - Run polling for bot @misterassistantloyalbot id=8392026795 - 'Mister Assistant'
+2026-03-20 13:50:04,041 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientOSError: [WinError 121] The semaphore timeout period has expired
+2026-03-20 13:50:04,068 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8392026795)
+2026-03-20 13:50:59,188 - aiogram.dispatcher - INFO - Connection established (tryings = 1, bot id = 8392026795)
+2026-03-20 13:55:05,323 - aiogram.dispatcher - INFO - Polling stopped
+2026-03-20 13:55:05,382 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ServerDisconnectedError: Server disconnected
+2026-03-20 13:55:05,395 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8392026795)
+2026-03-20 13:55:27,765 - aiogram.dispatcher - INFO - Start polling
+2026-03-20 13:55:28,601 - aiogram.dispatcher - INFO - Run polling for bot @misterassistantloyalbot id=8392026795 - 'Mister Assistant'
+2026-03-20 13:55:42,695 - aiogram.event - INFO - Update id=852457718 is handled. Duration 15 ms by bot id=8392026795

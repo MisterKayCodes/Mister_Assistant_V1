@@ -141,17 +141,22 @@ class Repository:
         cursor.execute("DELETE FROM pending_media WHERE user_id = ?", (user_id,))
         self.conn.commit()
 
-    def save_activity_with_photos(self, user_id, name, photo_paths):
-        """Saves an activity with a list of photo paths as a JSON string."""
+    def complete_activity_with_media(self, user_id, name):
+        """Fetches pending photos, saves activity, and clears pending queue."""
+        photo_paths = self.get_pending_media(user_id)
         cursor = self.conn.cursor()
         start_time = datetime.now()
         paths_json = json.dumps(photo_paths)
+        
         cursor.execute(
             "INSERT INTO activities (user_id, name, start_time, photo_paths) VALUES (?, ?, ?, ?)",
             (user_id, name, start_time, paths_json)
         )
         activity_id = cursor.lastrowid
         self.conn.commit()
+        
+        # Cleanup (Rule 14: Data Minimization)
+        self.clear_pending_media(user_id)
         self.update_user_state(user_id, current_activity_id=activity_id, last_activity_name=name, state_context=None)
         return activity_id
 
