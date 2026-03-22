@@ -160,3 +160,72 @@ sqlite3.OperationalError: no such column: state_context
 2026-03-22 02:57:49,850 - aiogram.dispatcher - INFO - Polling stopped
 2026-03-22 02:57:49,863 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ServerDisconnectedError: Server disconnected
 2026-03-22 02:57:49,874 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8392026795)
+2026-03-22 02:58:04,427 - aiogram.dispatcher - INFO - Start polling
+2026-03-22 02:58:06,278 - aiogram.dispatcher - INFO - Run polling for bot @misterassistantloyalbot id=8392026795 - 'Mister Assistant'
+2026-03-22 02:58:09,270 - aiogram.event - INFO - Update id=852457727 is handled. Duration 2671 ms by bot id=8392026795
+2026-03-22 02:58:21,074 - aiogram.event - INFO - Update id=852457728 is not handled. Duration 0 ms by bot id=8392026795
+2026-03-22 02:58:21,076 - aiogram.event - ERROR - Cause exception while process update id=852457728 by bot id=8392026795
+OperationalError: table activities has no column named photo_paths
+Traceback (most recent call last):
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 320, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 164, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 58, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\fsm\storage\memory.py", line 77, in lock
+    yield
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\fsm\middleware.py", line 43, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 161, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 153, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 189, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 161, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 153, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 181, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\bot\handlers.py", line 68, in telegram_handler
+    repo.complete_activity_with_media(user_id, text)
+  File "C:\Kaycris\Mister_Assistant_V2\data\repository.py", line 158, in complete_activity_with_media
+    cursor.execute(
+sqlite3.OperationalError: table activities has no column named photo_paths
+2026-03-22 02:59:44,889 - aiogram.event - INFO - Update id=852457729 is handled. Duration 2671 ms by bot id=8392026795
+2026-03-22 02:59:57,365 - aiogram.dispatcher - INFO - Polling stopped
+2026-03-22 03:00:07,128 - aiogram.dispatcher - INFO - Start polling
+2026-03-22 03:00:09,465 - aiogram.dispatcher - INFO - Run polling for bot @misterassistantloyalbot id=8392026795 - 'Mister Assistant'
+2026-03-22 03:00:16,222 - aiogram.event - INFO - Update id=852457730 is handled. Duration 3219 ms by bot id=8392026795

@@ -25,6 +25,7 @@ async def start_handler(message: types.Message):
 async def photo_handler(message: types.Message):
     user_id = str(message.from_user.id)
     state = repo.get_user_state(user_id)
+    pending_before = repo.get_pending_media(user_id)
     
     # 1. Nervous System (Service) saves the file
     path = await manager.save_photo(message.bot, message.photo[-1], user_id)
@@ -33,13 +34,16 @@ async def photo_handler(message: types.Message):
     repo.add_pending_media(user_id, path)
     
     # 3. Check State for "Quiet Mode" (Rule 6: Resilience)
-    if state.get("state_context") == "WAITING_FOR_CAPTION":
-        # Rule 10: Observability (Acknowledging the photo)
+    # If this is the FIRST photo in the current pending queue, always reply with text
+    # Even if state is stuck in WAITING_FOR_CAPTION
+    if state.get("state_context") == "WAITING_FOR_CAPTION" and len(pending_before) > 0:
+        # Rule 10: Observability (Acknowledging additional photos)
         try:
             await message.react([types.ReactionTypeEmoji(emoji="📥")])
         except:
             pass 
     else:
+        # Initial greeting / Fresh session
         repo.update_user_state(user_id, state_context="WAITING_FOR_CAPTION")
         await message.reply("📸 I've saved the photo! What activity is this for? (Or send more photos)")
 
