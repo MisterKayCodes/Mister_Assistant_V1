@@ -11,39 +11,21 @@ parser = Parser()
 logic = Logic()
 repo = Repository()
 manager = MediaManager()
+fmt = Formatter()
 
 @router.message(Command("help"))
 async def help_handler(message: types.Message):
-    await message.answer(
-        "📚 **Mister Assistant Multi-Modal Manual**\n\n"
-        "Here is how you can use my High-Trust Features:\n\n"
-        "📈 **Activity Documentation**\n"
-        "- `starting coding` - start a timer\n"
-        "- `now gym` - stop old activity and start a new one\n"
-        "- `what am i doing?` - check current status\n"
-        "- `done` or `stop` - finish an activity\n\n"
-        "📸 **Visual Evidence (Phase 2)**\n"
-        "- **Send a Photo** - I'll save it and wait for a caption.\n"
-        "- **Caption later** - Send text like 'Lunch' to link pending photos.\n"
-        "- **Multi-Photo** - Send many at once; I'll collect them all silently.\n"
-        "- `/cancel` - reset the photo memory queue.\n\n"
-        "💰 **Financial & Social**\n"
-        "- `spent 5000 on pizza` - log spending\n"
-        "- `My sister is Chichi` - remember relationships\n\n"
-        "🔔 **Tasks & Reminders**\n"
-        "- `remind me to pay bills at 18:00`\n"
-        "- `remind me to check oven in 10 minutes`\n\n"
-        "🦾 *I am designed for High Performance and Durable Memory.*"
-    )
+    await message.answer(fmt.format_help(), parse_mode="Markdown")
 
 @router.message(Command("start"))
 async def start_handler(message: types.Message):
     user_id = str(message.from_user.id)
-    # Rule 1: Known State - Reset everything on start
     repo.clear_pending_media(user_id)
     repo.update_user_state(user_id, state_context=None)
-    print(f"DEBUG: /start command received from {user_id}")
-    await message.answer("🤖 **Mister Assistant Phase 2 Online!**\n\nI can now see and remember. Send me a photo to log an activity with visual evidence, or use `/help` to see everything I can do!")
+    await message.answer(
+        fmt.format_success("MISTER ASSISTANT: PHASE 3 ONLINE! 🦾\n\nI am your Personal Historian. Send `/help` to see my full capabilities."),
+        parse_mode="Markdown"
+    )
 
 # --- NEW PHOTO HANDLER (The Ears) ---
 @router.message(F.photo)
@@ -137,11 +119,11 @@ async def telegram_handler(message: types.Message):
     elif intent == "stop_activity":
         active_id = repo.get_active_activity(user_id)
         if not active_id:
-            response = "🤖 You're not tracking anything right now."
+            response = fmt.format_error("You're not tracking anything right now.")
         else:
             duration = repo.stop_activity(active_id)
             repo.update_user_state(user_id, current_activity_id=None)
-            response = logic.format_stop_message(duration)
+            response = fmt.format_success(logic.format_stop_message(duration))
 
     elif intent == "switch_activity":
         active_id = repo.get_active_activity(user_id)
@@ -162,18 +144,18 @@ async def telegram_handler(message: types.Message):
         active_id = repo.get_active_activity(user_id)
         if active_id:
             name = repo.get_activity_name(active_id)
-            response = logic.format_check_message(name)
+            response = fmt.format_info(logic.format_check_message(name))
         else:
-            response = "🤖 You're not tracking anything right now."
+            response = fmt.format_error("You're not tracking anything right now.")
 
     elif intent == "retro_log":
         start, end, name = parsed.get("start"), parsed.get("end"), parsed.get("name")
         conflicts = repo.check_for_conflicts(user_id, start, end)
         if conflicts:
-            response = f"⚠️ **Conflict:** You already logged `{conflicts[0]}` during that window."
+            response = fmt.format_error(f"**Conflict:** You already logged `{conflicts[0]}` during that window.")
         else:
             repo.log_retro_activity(user_id, name, start, end)
-            response = f"✅ Historically logged: **{name}** ({start.strftime('%H:%M')} to {end.strftime('%H:%M')})"
+            response = fmt.format_success(f"Historically logged: **{name}** ({start.strftime('%H:%M')} to {end.strftime('%H:%M')})")
 
     elif intent == "retro_log_start_only":
         start, name = parsed.get("start"), parsed.get("name")
@@ -182,10 +164,10 @@ async def telegram_handler(message: types.Message):
         end = start + timedelta(hours=1)
         conflicts = repo.check_for_conflicts(user_id, start, end)
         if conflicts:
-            response = f"⚠️ **Conflict:** `{conflicts[0]}` is already in that time slot."
+            response = fmt.format_error(f"**Conflict:** `{conflicts[0]}` is already in that time slot.")
         else:
             repo.log_retro_activity(user_id, name, start, end)
-            response = f"✅ Historically logged: **{name}** at {start.strftime('%H:%M')} (assumed 1 hour)."
+            response = fmt.format_success(f"Historically logged: **{name}** at {start.strftime('%H:%M')} (assumed 1 hour).")
 
     elif intent == "tell_time":
         now = datetime.now()
