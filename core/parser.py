@@ -85,8 +85,8 @@ class Parser:
 
         # --- RETRO-LOGGING SENSING (Rule 11) ---
         import dateparser
-        # Patterns like: "I watched a movie from 2pm to 4pm" or "I ate at 1pm"
-        retro_match = re.match(r"(?i)i (?P<act>.+?) (?:at|from) (?P<time>.+)", text)
+        # Patterns like: "I watched a movie from 2pm to 4pm" or "watched movie at 2pm"
+        retro_match = re.match(r"(?i)(?:i )?(?P<act>.+?) (?:at|from) (?P<time>.+)", text)
         if retro_match:
             activity = retro_match.group("act")
             time_str = retro_match.group("time")

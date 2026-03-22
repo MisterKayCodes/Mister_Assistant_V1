@@ -1,0 +1,9 @@
+# Mister Assistant V2 - Terminal Command Log
+# This file tracks all major commands executed by the AI Assistant.
+
+- python -m scripts.git_sync (Used throughout for version control)
+- pip install dateparser (Added Natural Language support for Phase 3)
+- mkdir logs (Created dedicated logging directory)
+- mv test_historian.py tests/ (Organized test suite)
+- python tests/test_historian.py (Running Phase 3 verification)
+- rm mister_assistant.log (Cleaning root directory)

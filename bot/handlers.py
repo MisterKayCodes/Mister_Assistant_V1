@@ -95,7 +95,7 @@ async def telegram_handler(message: types.Message):
     if state.get("state_context") == "WAITING_FOR_CAPTION":
         # Rule 5: Idempotency / JSON Serialization handled in Repo
         # Senior Check: Does the caption have a retro-time?
-        parsed_caption = parser.parse(f"i {text}") # Try parsing as Retro-Log
+        parsed_caption = parser.parse(text) # Let the parser detect (i) optional
         if parsed_caption and parsed_caption.get("intent") in ["retro_log", "retro_log_start_only"]:
             # Multimodal Retro-Log logic
             name = parsed_caption.get("name")
