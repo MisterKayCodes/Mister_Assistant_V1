@@ -186,3 +186,20 @@ class Repository:
         if cursor.fetchone(): return True
         
         return False
+
+    def get_due_reminders(self):
+        """Fetches all unsent reminders that are due."""
+        cursor = self.conn.cursor()
+        # Find reminders where date <= now and is_sent == 0
+        now = datetime.now()
+        cursor.execute(
+            "SELECT id, user_id, text FROM reminders WHERE is_sent = 0 AND datetime(reminder_date) <= datetime(?)",
+            (now,)
+        )
+        rows = cursor.fetchall()
+        return rows
+
+    def mark_reminder_sent(self, reminder_id):
+        cursor = self.conn.cursor()
+        cursor.execute("UPDATE reminders SET is_sent = 1 WHERE id = ?", (reminder_id,))
+        self.conn.commit()
