@@ -187,6 +187,10 @@ async def telegram_handler(message: types.Message):
             repo.log_retro_activity(user_id, name, start, end)
             response = f"✅ Historically logged: **{name}** at {start.strftime('%H:%M')} (assumed 1 hour)."
 
+    elif intent == "tell_time":
+        now = datetime.now()
+        response = f"🕒 The current time is **{now.strftime('%H:%M:%S')}** (UTC+1)."
+
     elif intent == "set_reminder":
         repo.set_reminder(user_id, parsed.get("text"), parsed.get("time"))
         response = logic.format_reminder_set(parsed.get("text"), parsed.get("friendly_time") or parsed.get("time"))

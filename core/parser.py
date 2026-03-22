@@ -106,7 +106,9 @@ class Parser:
                 # Senior Decision: "at X" usually means the START of the session.
                 return {"intent": "retro_log_start_only", "name": activity, "start": dt}
 
-        return None
+        # --- UTILITY INTENTS ---
+        if any(x in text for x in ["what time", "current time", "the time"]):
+            return {"intent": "tell_time"}
 
         return None
 

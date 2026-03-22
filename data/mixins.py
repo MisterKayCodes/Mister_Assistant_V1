@@ -155,11 +155,12 @@ class MediaMixin(BaseMixin):
         """Checks for any activity that overlaps with the given time range."""
         cursor = self.conn.cursor()
         # Overlap condition: (StartA < EndB) AND (EndA > StartB)
+        # Use COALESCE(end_time, '9999-12-31') to include ongoing activities
         cursor.execute(
             """SELECT name FROM activities 
                WHERE user_id = ? 
                AND datetime(start_time) < datetime(?) 
-               AND datetime(end_time) > datetime(?)""",
+               AND datetime(COALESCE(end_time, '9999-12-31')) > datetime(?)""",
             (user_id, end_time, start_time)
         )
         return [row[0] for row in cursor.fetchall()]
