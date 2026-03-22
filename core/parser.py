@@ -68,6 +68,36 @@ class Parser:
         if "delete all" in text.lower() and "data" in text.lower():
             return {"intent": "reset_request"}
 
+        # --- CORRECTION ENGINE (Phase 5) ---
+        # Pattern 1: "correct [activity] at [time] to [new_activity]"
+        # Pattern 2: "actually i was [new_activity] at [time]"
+        # Pattern 3: "fix [time] it was [new_activity]"
+        
+        c_match = re.match(r"(?i)correct (?P<old>.+?) at (?P<time>.+?) to (?P<new>.+)", text)
+        if c_match:
+            return {
+                "intent": "correction", 
+                "old_name": c_match.group("old").strip(),
+                "time_str": c_match.group("time").strip(),
+                "new_name": c_match.group("new").strip()
+            }
+            
+        a_match = re.match(r"(?i)actually i was (?P<new>.+?) at (?P<time>.+)", text)
+        if a_match:
+            return {
+                "intent": "correction",
+                "time_str": a_match.group("time").strip(),
+                "new_name": a_match.group("new").strip()
+            }
+
+        f_match = re.match(r"(?i)fix (?P<time>.+?) it was (?P<new>.+)", text)
+        if f_match:
+            return {
+                "intent": "correction",
+                "time_str": f_match.group("time").strip(),
+                "new_name": f_match.group("new").strip()
+            }
+
         # --- RETRO-LOGGING SENSING (Rule 11) ---
         import dateparser
         # Patterns like: "I watched a movie from 2pm to 4pm" or "watched movie at 2pm"
