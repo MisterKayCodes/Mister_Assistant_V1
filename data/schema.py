@@ -47,7 +47,10 @@ SCHEMA_QUERIES = [
         last_person_id INTEGER,
         last_intent TEXT,
         last_activity_name TEXT,
-        state_context TEXT -- e.g. 'WAITING_FOR_CAPTION'
+        state_context TEXT, -- e.g. 'WAITING_FOR_CAPTION'
+        reset_code INTEGER,
+        correction_options TEXT, -- JSON array of matches
+        correction_new_info TEXT -- JSON object of the proposed update
     )
     """,
     """

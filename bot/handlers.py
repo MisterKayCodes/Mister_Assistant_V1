@@ -263,4 +263,5 @@ async def telegram_handler(message: types.Message):
     else:
         response = logic.format_unknown()
 
-    await message.answer(response)
+    if response:
+        await message.answer(response, parse_mode="Markdown")

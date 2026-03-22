@@ -35,6 +35,12 @@ class Repository(
             # For 2-Step Reset Safety (Phase 4)
             cursor.execute("ALTER TABLE user_state ADD COLUMN reset_code INTEGER")
         except sqlite3.OperationalError: pass
+
+        try:
+            # For Surgical Correction (Phase 5)
+            cursor.execute("ALTER TABLE user_state ADD COLUMN correction_options TEXT")
+            cursor.execute("ALTER TABLE user_state ADD COLUMN correction_new_info TEXT")
+        except sqlite3.OperationalError: pass
         
         try:
             cursor.execute("ALTER TABLE activities ADD COLUMN photo_paths TEXT")
