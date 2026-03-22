@@ -1,6 +1,6 @@
 from aiogram import Router, types, F
 from aiogram.filters import Command
-from datetime import timedelta
+from datetime import timedelta, datetime
 from core.parser import Parser
 from core.logic import Logic
 from data.repository import Repository
