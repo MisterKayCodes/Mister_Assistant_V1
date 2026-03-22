@@ -110,3 +110,38 @@ class Formatter:
         res += f"🏁 **Total Logged:** `{total_h}h {total_m}m`"
         
         return res
+
+    def format_correction_diff(self, old_data, new_data):
+        """High-Diff UI Rule 11: Show the Delta."""
+        _, old_name, old_start_str, old_end_str = old_data
+        _, new_name, new_start_str, new_end_str = new_data
+        
+        old_start = datetime.fromisoformat(old_start_str)
+        old_end = datetime.fromisoformat(old_end_str) if old_end_str else datetime.now()
+        new_start = datetime.fromisoformat(new_start_str)
+        new_end = datetime.fromisoformat(new_end_str) if new_end_str else datetime.now()
+        
+        old_dur = (old_end - old_start).total_seconds()
+        new_dur = (new_end - new_start).total_seconds()
+        delta_mins = int((new_dur - old_dur) // 60)
+        delta_str = f"{delta_mins}m" if delta_mins < 0 else f"+{delta_mins}m"
+
+        return (
+            "✏️ **LOG UPDATED!**\n"
+            "━━━━━━━━━━━━━━━━━━\n"
+            f"❌ **From:** {old_name} ({old_start.strftime('%H:%M')} - {old_end.strftime('%H:%M')})\n"
+            f"✅ **To:** {new_name} ({new_start.strftime('%H:%M')} - {new_end.strftime('%H:%M')})\n\n"
+            f"⏱️ **Change:** `{delta_str}`\n"
+            f"📅 **Date:** {new_start.strftime('%b %d')}\n"
+            "━━━━━━━━━━━━━━━━━━\n"
+            "Your summary has been adjusted!"
+        )
+
+    def format_selection_menu(self, activities, time_str):
+        """Surgical Selection Rule 10: Resolve Ambiguity."""
+        res = f"🧐 **Multiple activities found at {time_str}:**\n\n"
+        for i, act in enumerate(activities):
+            start = datetime.fromisoformat(act['start']).strftime('%H:%M')
+            res += f"{i+1}. **{act['name']}** (Started {start})\n"
+        res += "\nReply with the **number** to fix, or /cancel."
+        return res
