@@ -5,6 +5,7 @@ from core.parser import Parser
 from core.logic import Logic
 from data.repository import Repository
 from services.media_manager import MediaManager
+from utils.formatter import Formatter
 
 router = Router()
 parser = Parser()
@@ -64,12 +65,14 @@ async def telegram_handler(message: types.Message):
     if not text:
         return
 
-    # --- Escape Hatch (Rule 6) ---
-    if text.startswith("/"):
+    # --- Escape Hatch (Rule 6: Resilience) ---
+    if text.startswith("/") and text not in ["/start", "/help"]:
         repo.clear_pending_media(user_id)
         repo.update_user_state(user_id, state_context=None)
-        if text != "/start":
-            await message.answer("🤖 Action cancelled. How can I help you?")
+        if text == "/cancel":
+            await message.answer(fmt.format_info("Action cancelled. Photo queue cleared."))
+        else:
+            await message.answer(fmt.format_info("Command received. Photo session cleared."))
         return
 
     # --- State Machine: WAITING_FOR_CAPTION ---
@@ -114,7 +117,7 @@ async def telegram_handler(message: types.Message):
         active_id = repo.get_active_activity(user_id)
         if active_id: repo.stop_activity(active_id)
         repo.start_activity(user_id, parsed.get("name"))
-        response = logic.format_start_message(parsed.get("name"))
+        response = fmt.format_success(logic.format_start_message(parsed.get("name")))
 
     elif intent == "stop_activity":
         active_id = repo.get_active_activity(user_id)
@@ -130,15 +133,15 @@ async def telegram_handler(message: types.Message):
         duration = None
         if active_id: duration = repo.stop_activity(active_id)
         repo.start_activity(user_id, parsed.get("name"))
-        response = logic.format_switch_message(duration, parsed.get("name"))
+        response = fmt.format_success(logic.format_switch_message(duration, parsed.get("name")))
 
     elif intent == "add_person":
         repo.add_person(user_id, parsed.get("name"), parsed.get("relationship"))
-        response = logic.format_person_added(parsed.get("name"), parsed.get("relationship"))
+        response = fmt.format_success(logic.format_person_added(parsed.get("name"), parsed.get("relationship")))
 
     elif intent == "log_spending":
         repo.log_spending(user_id, parsed.get("amount"), parsed.get("category"))
-        response = logic.format_spending_logged(parsed.get("amount"), parsed.get("category"))
+        response = fmt.format_success(logic.format_spending_logged(parsed.get("amount"), parsed.get("category")))
 
     elif intent == "check_activity":
         active_id = repo.get_active_activity(user_id)

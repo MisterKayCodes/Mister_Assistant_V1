@@ -23,27 +23,27 @@ class Parser:
         return {"intent": "unknown", "text": text}
 
     def fallback_parse(self, text):
-        text = text.lower().strip()
+        text = text.strip()
         
         # Activity Tracking
-        if text.startswith("starting "):
-            return {"intent": "start_activity", "name": text.replace("starting ", "").strip()}
-        if text == "done" or text == "stop":
+        if text.lower().startswith("starting "):
+            return {"intent": "start_activity", "name": text[9:].strip()}
+        if text.lower() == "done" or text.lower() == "stop":
             return {"intent": "stop_activity"}
-        if text.startswith("now "):
-            return {"intent": "switch_activity", "name": text.replace("now ", "").strip()}
-        if text == "what am i doing?":
+        if text.lower().startswith("now "):
+            return {"intent": "switch_activity", "name": text[4:].strip()}
+        if text.lower() == "what am i doing?":
             return {"intent": "check_activity"}
-        if "yesterday" in text and "do" in text:
+        if "yesterday" in text.lower() and "do" in text.lower():
             return {"intent": "history_activity", "target": "yesterday"}
 
         # People Memory
-        person_match = re.match(r"(?:my )?(?P<rel>\w+) is (?P<name>\w+)", text)
+        person_match = re.match(r"(?i)(?:my )?(?P<rel>\w+) is (?P<name>\w+)", text)
         if person_match:
             return {"intent": "add_person", "relationship": person_match.group("rel"), "name": person_match.group("name")}
             
         # Spending Tracking (spent or paid)
-        spent_match = re.search(r"(?:spent|paid) (?P<amount>\d+) (?:on|for) (?P<category>.+)", text)
+        spent_match = re.search(r"(?i)(?:spent|paid) (?P<amount>\d+) (?:on|for) (?P<category>.+)", text)
         if spent_match:
             return {
                 "intent": "log_spending", 

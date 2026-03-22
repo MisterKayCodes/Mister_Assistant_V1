@@ -152,16 +152,20 @@ class MediaMixin(BaseMixin):
         return cursor.lastrowid
 
     def check_for_conflicts(self, user_id, start_time, end_time):
-        """Checks for any activity that overlaps with the given time range."""
+        """Checks for any activity that overlaps with the given time range.
+           Rule 5 update (Lead Debugger): Ongoing tasks only conflict up until NOW.
+        """
         cursor = self.conn.cursor()
-        # Overlap condition: (StartA < EndB) AND (EndA > StartB)
-        # Use COALESCE(end_time, '9999-12-31') to include ongoing activities
+        now = datetime.now()
+        # Logic: (StartA < EndB) AND (EndA > StartB)
+        # For ongoing (end_time is NULL), we use min(now, end_proposed) as its virtual end for comparison
+        # Actually simplest SQL: end_time IS NULL -> compare with now
         cursor.execute(
             """SELECT name FROM activities 
                WHERE user_id = ? 
                AND datetime(start_time) < datetime(?) 
-               AND datetime(COALESCE(end_time, '9999-12-31')) > datetime(?)""",
-            (user_id, end_time, start_time)
+               AND datetime(COALESCE(end_time, ?)) > datetime(?)""",
+            (user_id, end_time, now, start_time)
         )
         return [row[0] for row in cursor.fetchall()]
 
