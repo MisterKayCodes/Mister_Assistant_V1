@@ -182,6 +182,34 @@ async def telegram_handler(message: types.Message):
             repo.log_retro_activity(user_id, name, start, end)
             response = fmt.format_success(f"Historically logged: **{name}** at {start.strftime('%H:%M')} (assumed 1 hour).")
 
+    elif intent == "correction":
+        import dateparser
+        time_str = parsed.get("time_str")
+        dt = dateparser.parse(time_str, settings={'PREFER_DATES_FROM': 'past'})
+        
+        if not dt:
+            response = fmt.format_error(f"I couldn't understand the time: `{time_str}`")
+        else:
+            matches = repo.find_activities_at_time(user_id, dt.isoformat())
+            if not matches:
+                response = fmt.format_error(f"Nothing found at {dt.strftime('%H:%M %b %d')}.")
+            elif len(matches) == 1:
+                # Surgical Update (Singleton)
+                res = repo.update_activity(matches[0]["id"], name=parsed.get("new_name"))
+                if res["status"] == "success":
+                    response = fmt.format_correction_diff(res["old"], res["new"])
+                else:
+                    response = fmt.format_error("Conflict! The corrected time overlaps with existing logs.")
+            else:
+                # Surgical Selection (Ambiguity Resolution)
+                repo.update_user_state(
+                    user_id, 
+                    state_context="WAITING_FOR_CORRECTION_SELECTION", 
+                    correction_options=matches,
+                    correction_new_info={"name": parsed.get("new_name")}
+                )
+                response = fmt.format_selection_menu(matches, dt.strftime("%H:%M"))
+
     elif intent == "summary":
         report = analytics.get_summary(user_id, period=parsed.get("period"))
         response = fmt.format_summary(report)

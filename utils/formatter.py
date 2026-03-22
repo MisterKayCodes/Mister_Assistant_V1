@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class Formatter:
     @staticmethod
     def format_title(text):
