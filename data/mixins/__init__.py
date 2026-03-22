@@ -2,7 +2,6 @@ from data.mixins.base import BaseMixin, StateMixin, SpendingMixin, PeopleMixin, 
 from data.mixins.activity import ActivityMixin
 from data.mixins.media import MediaMixin
 
-# This file is now a proxy to satisfy the 200-line requirement while maintaining the legacy API.
 __all__ = [
     'BaseMixin', 'StateMixin', 'SpendingMixin', 
     'PeopleMixin', 'ReminderMixin', 'ActivityMixin', 'MediaMixin'
