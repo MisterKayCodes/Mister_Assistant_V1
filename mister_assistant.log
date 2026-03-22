@@ -247,3 +247,7 @@ sqlite3.OperationalError: table activities has no column named photo_paths
 2026-03-22 03:08:57,094 - aiogram.event - INFO - Update id=852457739 is handled. Duration 359 ms by bot id=8392026795
 2026-03-22 03:09:27,648 - aiogram.event - INFO - Update id=852457740 is handled. Duration 327 ms by bot id=8392026795
 2026-03-22 03:09:43,613 - aiogram.event - INFO - Update id=852457741 is handled. Duration 407 ms by bot id=8392026795
+2026-03-22 03:11:11,333 - aiogram.dispatcher - INFO - Start polling
+2026-03-22 03:11:12,310 - aiogram.dispatcher - INFO - Run polling for bot @misterassistantloyalbot id=8392026795 - 'Mister Assistant'
+2026-03-22 03:17:09,344 - aiogram.event - INFO - Update id=852457742 is handled. Duration 891 ms by bot id=8392026795
+2026-03-22 03:17:31,287 - aiogram.event - INFO - Update id=852457743 is handled. Duration 311 ms by bot id=8392026795

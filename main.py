@@ -3,12 +3,27 @@ import asyncio
 import logging
 from aiogram import Bot, Dispatcher, types
 from config import TELEGRAM_BOT_TOKEN
-from bot.handlers import router
+from bot.handlers import router, repo # Import repo from handlers for the scheduler
 from utils.logger import setup_logging
 
 # Rule 10: Observability
 setup_logging()
 logger = logging.getLogger(__name__)
+
+async def reminder_scheduler(bot: Bot):
+    """Background heartbeat for reminders (Rule 7: Resilience)"""
+    logger.info("⏰ Reminder Heartbeat started.")
+    while True:
+        try:
+            due = repo.get_due_reminders()
+            for r_id, user_id, text in due:
+                await bot.send_message(user_id, f"🔔 **REMINDER:** {text}")
+                repo.mark_reminder_sent(r_id)
+                logger.info(f"🔔 Sent reminder {r_id} to {user_id}")
+        except Exception as e:
+            logger.error(f"🚨 Heartbeat Error: {e}")
+            
+        await asyncio.sleep(60) # Check every minute
 
 async def main():
     if not TELEGRAM_BOT_TOKEN:
@@ -19,6 +34,9 @@ async def main():
     bot = Bot(token=TELEGRAM_BOT_TOKEN)
     dp = Dispatcher()
     dp.include_router(router)
+    
+    # Start the Heartbeat (The Alarm Clock)
+    asyncio.create_task(reminder_scheduler(bot))
     
     try:
         await dp.start_polling(bot)
