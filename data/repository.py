@@ -19,6 +19,13 @@ class Repository:
         cursor = self.conn.cursor()
         for query in SCHEMA_QUERIES:
             cursor.execute(query)
+        
+        # Migration: Add state_context to existing user_state table (Rule 5: Idempotency)
+        try:
+            cursor.execute("ALTER TABLE user_state ADD COLUMN state_context TEXT")
+        except sqlite3.OperationalError:
+            pass # Column already exists
+            
         self.conn.commit()
 
     # --- Activity Methods ---

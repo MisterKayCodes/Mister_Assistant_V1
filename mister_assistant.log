@@ -89,3 +89,8 @@
 2026-03-22 02:54:15,379 - aiogram.event - INFO - Update id=852457723 is handled. Duration 327 ms by bot id=8392026795
 2026-03-22 02:54:21,726 - aiogram.event - INFO - Update id=852457724 is handled. Duration 329 ms by bot id=8392026795
 2026-03-22 02:54:32,764 - aiogram.event - INFO - Update id=852457725 is handled. Duration 0 ms by bot id=8392026795
+2026-03-22 02:55:48,398 - aiogram.dispatcher - INFO - Start polling
+2026-03-22 02:55:50,176 - aiogram.dispatcher - INFO - Run polling for bot @misterassistantloyalbot id=8392026795 - 'Mister Assistant'
+2026-03-22 02:56:04,796 - aiogram.dispatcher - INFO - Polling stopped
+2026-03-22 02:56:04,812 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ServerDisconnectedError: Server disconnected
+2026-03-22 02:56:04,823 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8392026795)
