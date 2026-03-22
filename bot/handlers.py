@@ -1,6 +1,9 @@
 from aiogram import Router, types, F
 from aiogram.filters import Command
 from datetime import timedelta, datetime
+import random
+from config import DB_PATH
+from core.analytics import AnalyticsEngine
 from core.parser import Parser
 from core.logic import Logic
 from data.repository import Repository
@@ -13,10 +16,17 @@ logic = Logic()
 repo = Repository()
 manager = MediaManager()
 fmt = Formatter()
+analytics = AnalyticsEngine(DB_PATH)
 
 @router.message(Command("help"))
 async def help_handler(message: types.Message):
     await message.answer(fmt.format_help(), parse_mode="Markdown")
+
+@router.message(Command("summary"))
+async def summary_command_handler(message: types.Message):
+    user_id = str(message.from_user.id)
+    report = analytics.get_summary(user_id, period="today")
+    await message.answer(fmt.format_summary(report), parse_mode="Markdown")
 
 @router.message(Command("start"))
 async def start_handler(message: types.Message):
@@ -171,6 +181,15 @@ async def telegram_handler(message: types.Message):
         else:
             repo.log_retro_activity(user_id, name, start, end)
             response = fmt.format_success(f"Historically logged: **{name}** at {start.strftime('%H:%M')} (assumed 1 hour).")
+
+    elif intent == "summary":
+        report = analytics.get_summary(user_id, period=parsed.get("period"))
+        response = fmt.format_summary(report)
+
+    elif intent == "reset_request":
+        code = random.randint(1000, 9999)
+        repo.update_user_state(user_id, state_context="WAITING_FOR_RESET_CODE", reset_code=code)
+        response = fmt.format_error(f"**NUCLEAR RESET INITIATED**\n\nThis will delete ALL your logs and data. To confirm, send this code: `{code}`")
 
     elif intent == "tell_time":
         now = datetime.now()
