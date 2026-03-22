@@ -114,6 +114,40 @@ async def telegram_handler(message: types.Message):
         await message.answer(f"✅ Activity logged with visual evidence: **{text}**")
         return
 
+    # --- State Machine: WAITING_FOR_CORRECTION_SELECTION ---
+    if state.get("state_context") == "WAITING_FOR_CORRECTION_SELECTION":
+        try:
+            choice = int(text.strip()) - 1
+            options = state.get("correction_options", [])
+            if 0 <= choice < len(options):
+                target = options[choice]
+                new_info = state.get("correction_new_info")
+                res = repo.update_activity(target["id"], name=new_info.get("name"))
+                
+                if res["status"] == "success":
+                    await message.answer(fmt.format_correction_diff(res["old"], res["new"]), parse_mode="Markdown")
+                else:
+                    await message.answer(fmt.format_error("Conflict detected! Integrity preserved."))
+                
+                repo.update_user_state(user_id, state_context=None, correction_options=None, correction_new_info=None)
+            else:
+                await message.answer("Invalid choice. Please send the number or /cancel.")
+        except ValueError:
+            await message.answer("Please send a number.")
+        return
+
+    # --- State Machine: WAITING_FOR_RESET_CODE ---
+    if state.get("state_context") == "WAITING_FOR_RESET_CODE":
+        expected_code = state.get("reset_code")
+        if text.strip() == str(expected_code):
+            repo.clear_all_user_data(user_id)
+            repo.update_user_state(user_id, state_context=None, reset_code=None)
+            await message.answer(fmt.format_success("DATABASE WIPED. You are now a ghost. 👻 Start fresh with /help."))
+        else:
+            repo.update_user_state(user_id, state_context=None, reset_code=None)
+            await message.answer(fmt.format_error("Reset cancelled. Integrity maintained."))
+        return
+
     # --- Null Safety (The Golden Rule) ---
     parsed = parser.parse(text)
     if not parsed:
