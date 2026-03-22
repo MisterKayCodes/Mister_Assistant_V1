@@ -146,7 +146,7 @@ async def telegram_handler(message: types.Message):
 
     elif intent == "set_reminder":
         repo.set_reminder(user_id, parsed.get("text"), parsed.get("time"))
-        response = logic.format_reminder_set(parsed.get("text"), parsed.get("time"))
+        response = logic.format_reminder_set(parsed.get("text"), parsed.get("friendly_time") or parsed.get("time"))
     else:
         response = logic.format_unknown()
 

@@ -256,3 +256,9 @@ sqlite3.OperationalError: table activities has no column named photo_paths
 2026-03-22 03:27:35,974 - aiogram.dispatcher - INFO - Polling stopped
 2026-03-22 03:27:36,128 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ServerDisconnectedError: Server disconnected
 2026-03-22 03:27:36,132 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8392026795)
+2026-03-22 03:30:25,460 - aiogram.dispatcher - INFO - Start polling
+2026-03-22 03:30:27,584 - aiogram.dispatcher - INFO - Run polling for bot @misterassistantloyalbot id=8392026795 - 'Mister Assistant'
+2026-03-22 03:30:44,197 - aiogram.event - INFO - Update id=852457744 is handled. Duration 842 ms by bot id=8392026795
+2026-03-22 03:35:00,778 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientOSError: [WinError 1236] The network connection was aborted by the local system
+2026-03-22 03:35:00,986 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8392026795)
+2026-03-22 03:35:13,176 - aiogram.dispatcher - INFO - Connection established (tryings = 1, bot id = 8392026795)

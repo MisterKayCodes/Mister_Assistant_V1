@@ -56,18 +56,32 @@ class Parser:
         if remind_match:
             task = remind_match.group("task")
             time_raw = remind_match.group("time")
+            friendly_time = time_raw
+            iso_time = time_raw
             
-            # Simple Relative Resolver
+            # Simple Relative & Natural Resolver
+            from datetime import datetime, timedelta
+            now = datetime.now()
+            
             if "in" in time_raw and "minute" in time_raw:
                 try:
                     mins = int(re.search(r"\d+", time_raw).group())
-                    from datetime import datetime, timedelta
-                    future = datetime.now() + timedelta(minutes=mins)
-                    time_raw = future.strftime("%H:%M today")
-                except:
-                    pass
-            
-            return {"intent": "set_reminder", "text": task, "time": time_raw}
+                    future = now + timedelta(minutes=mins)
+                    iso_time = future.strftime("%Y-%m-%d %H:%M:%S")
+                    friendly_time = future.strftime("%H:%M today")
+                except: pass
+            elif "tomorrow" in time_raw:
+                iso_time = (now + timedelta(days=1)).strftime("%Y-%m-%d 09:00:00")
+                friendly_time = "09:00 tomorrow"
+            elif "at" in time_raw:
+                # e.g. "at 18:00"
+                t_match = re.search(r"(\d+):(\d+)", time_raw)
+                if t_match:
+                    h, m = t_match.groups()
+                    iso_time = now.replace(hour=int(h), minute=int(m), second=0).strftime("%Y-%m-%d %H:%M:%S")
+                    friendly_time = f"{h}:{m} today"
+
+            return {"intent": "set_reminder", "text": task, "time": iso_time, "friendly_time": friendly_time}
 
         return None
 
