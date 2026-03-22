@@ -94,3 +94,69 @@
 2026-03-22 02:56:04,796 - aiogram.dispatcher - INFO - Polling stopped
 2026-03-22 02:56:04,812 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ServerDisconnectedError: Server disconnected
 2026-03-22 02:56:04,823 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8392026795)
+2026-03-22 02:56:15,700 - aiogram.dispatcher - INFO - Start polling
+2026-03-22 02:56:16,394 - aiogram.dispatcher - INFO - Run polling for bot @misterassistantloyalbot id=8392026795 - 'Mister Assistant'
+2026-03-22 02:56:22,602 - aiogram.event - INFO - Update id=852457726 is not handled. Duration 1875 ms by bot id=8392026795
+2026-03-22 02:56:22,605 - aiogram.event - ERROR - Cause exception while process update id=852457726 by bot id=8392026795
+OperationalError: no such column: state_context
+Traceback (most recent call last):
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 320, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 164, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 58, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\fsm\storage\memory.py", line 77, in lock
+    yield
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\fsm\middleware.py", line 43, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 161, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 153, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 189, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 161, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 153, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 181, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Kaycris\Mister_Assistant_V2\bot\handlers.py", line 43, in photo_handler
+    repo.update_user_state(user_id, state_context="WAITING_FOR_CAPTION")
+  File "C:\Kaycris\Mister_Assistant_V2\data\repository.py", line 77, in update_user_state
+    cursor.execute(f"UPDATE user_state SET {key} = ? WHERE user_id = ?", (value, user_id))
+sqlite3.OperationalError: no such column: state_context
+2026-03-22 02:57:49,850 - aiogram.dispatcher - INFO - Polling stopped
+2026-03-22 02:57:49,863 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ServerDisconnectedError: Server disconnected
+2026-03-22 02:57:49,874 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8392026795)

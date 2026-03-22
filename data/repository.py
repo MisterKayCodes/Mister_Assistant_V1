@@ -25,6 +25,12 @@ class Repository:
             cursor.execute("ALTER TABLE user_state ADD COLUMN state_context TEXT")
         except sqlite3.OperationalError:
             pass # Column already exists
+
+        # Migration: Add photo_paths to existing activities table
+        try:
+            cursor.execute("ALTER TABLE activities ADD COLUMN photo_paths TEXT")
+        except sqlite3.OperationalError:
+            pass # Column already exists
             
         self.conn.commit()
 
