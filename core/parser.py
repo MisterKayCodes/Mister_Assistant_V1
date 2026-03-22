@@ -1,130 +1,30 @@
-import re
+from core.parsers.cache import PatternCache
+from core.parsers.rules import RuleParser
+from core.parsers.temporal import TemporalParser
+from core.parsers.edit import EditParser
 from config import USE_AI, API_CALLS_DAILY_LIMIT
 
 class Parser:
     def __init__(self):
         self.api_calls_today = 0
+        self.cache = PatternCache()
 
-    def parse(self, text):
-        # 1. Try Rule-based / Regex fallback first for speed/certainty
-        fallback_result = self.fallback_parse(text)
-        if fallback_result:
-            return fallback_result
-
-        # 2. Try AI parsing
-        if USE_AI and self.api_calls_today < API_CALLS_DAILY_LIMIT:
-            try:
-                result = self.ai_parse(text)
-                self.api_calls_today += 1
-                return result
-            except:
-                pass # Fallback to clarification or broader rules
-
-        return {"intent": "unknown", "text": text}
-
-    def fallback_parse(self, text):
-        text = text.strip()
-        
-        # Activity Tracking
-        if text.lower().startswith("starting "):
-            return {"intent": "start_activity", "name": text[9:].strip()}
-        if text.lower() == "done" or text.lower() == "stop":
-            return {"intent": "stop_activity"}
-        if text.lower().startswith("now "):
-            return {"intent": "switch_activity", "name": text[4:].strip()}
-        if text.lower() == "what am i doing?":
-            return {"intent": "check_activity"}
-        if "yesterday" in text.lower() and "do" in text.lower() and "summary" not in text.lower():
-            return {"intent": "history_activity", "target": "yesterday"}
-
-        # People Memory
-        person_match = re.match(r"(?i)(?:my )?(?P<rel>\w+) is (?P<name>\w+)", text)
-        if person_match:
-            return {"intent": "add_person", "relationship": person_match.group("rel"), "name": person_match.group("name")}
-            
-        # Spending Tracking (spent or paid)
-        spent_match = re.search(r"(?i)(?:spent|paid) (?P<amount>\d+) (?:on|for) (?P<category>.+)", text)
-        if spent_match:
-            return {
-                "intent": "log_spending", 
-                "amount": float(spent_match.group("amount")), 
-                "category": spent_match.group("category").strip()
-            }
-
-        # Reminders (Natural & Relative)
-        remind_match = re.search(r"(?i)remind me to (?P<task>.+?) (?P<time>tomorrow|next week|at \d+:\d+|in \d+ minutes?)", text)
-        if remind_match:
-            return {"intent": "set_reminder", "task": remind_match.group("task"), "time": remind_match.group("time")}
-
-        # Analytics (The Chronicler)
-        if "summary" in text.lower():
-            period = "today"
-            if "yesterday" in text.lower(): period = "yesterday"
-            elif "last week" in text.lower(): period = "last_week"
-            elif "this week" in text.lower() or "weekly" in text.lower(): period = "this_week"
-            elif "month" in text.lower(): period = "month"
-            return {"intent": "summary", "period": period}
-
-        if "delete all" in text.lower() and "data" in text.lower():
-            return {"intent": "reset_request"}
-
-        # --- CORRECTION ENGINE (Phase 5) ---
-        # Pattern 1: "correct [activity] at [time] to [new_activity]"
-        # Pattern 2: "actually i was [new_activity] at [time]"
-        # Pattern 3: "fix [time] it was [new_activity]"
-        
-        c_match = re.match(r"(?i)correct (?P<old>.+?) at (?P<time>.+?) to (?P<new>.+)", text)
-        if c_match:
-            return {
-                "intent": "correction", 
-                "old_name": c_match.group("old").strip(),
-                "time_str": c_match.group("time").strip(),
-                "new_name": c_match.group("new").strip()
-            }
-            
-        a_match = re.match(r"(?i)actually i was (?P<new>.+?) at (?P<time>.+)", text)
-        if a_match:
-            return {
-                "intent": "correction",
-                "time_str": a_match.group("time").strip(),
-                "new_name": a_match.group("new").strip()
-            }
-
-        f_match = re.match(r"(?i)fix (?P<time>.+?) it was (?P<new>.+)", text)
-        if f_match:
-            return {
-                "intent": "correction",
-                "time_str": f_match.group("time").strip(),
-                "new_name": f_match.group("new").strip()
-            }
-
-        # --- RETRO-LOGGING SENSING (Rule 11) ---
-        import dateparser
-        # Patterns like: "I watched a movie from 2pm to 4pm" or "watched movie at 2pm"
-        retro_match = re.match(r"(?i)(?:i )?(?P<act>.+?) (?:at|from) (?P<time>.+)", text)
-        if retro_match:
-            activity = retro_match.group("act")
-            time_str = retro_match.group("time")
-            
-            # Handle "from X to Y" explicitly
-            if " to " in time_str:
-                parts = time_str.split(" to ")
-                start_dt = dateparser.parse(parts[0], settings={'PREFER_DATES_FROM': 'past'})
-                end_dt = dateparser.parse(parts[1], settings={'PREFER_DATES_FROM': 'past'})
-                if start_dt and end_dt:
-                    return {"intent": "retro_log", "name": activity, "start": start_dt, "end": end_dt}
-            
-            # Handle "at X"
-            dt = dateparser.parse(time_str, settings={'PREFER_DATES_FROM': 'past'})
-            if dt:
-                return {"intent": "retro_log_start_only", "name": activity, "start": dt}
-
-        # --- UTILITY INTENTS ---
+    def parse(self, text, user_id=None):
+        """Main entry point for intent parsing."""
+        # 1. Static Utilities (Highest Priority)
+        # Rule: Core features like /time should NEVER be hijacked by learned patterns
         if any(x in text.lower() for x in ["what time", "current time", "the time"]):
             return {"intent": "tell_time"}
 
-        return None
+        # 2. Check Custom Cache (O(1))
+        if user_id:
+            custom_res = self.cache.match(user_id, text)
+            if custom_res: return custom_res
 
-    def ai_parse(self, text):
-        # Placeholder for Gemini/DeepSeek integration
+        # 3. Sequential Rule Chains
+        for sub_parser in [RuleParser, TemporalParser, EditParser]:
+            res = sub_parser.parse(text)
+            if res: return res
+
+        # 4. AI Fallback (Future Phase)
         return {"intent": "unknown", "text": text}

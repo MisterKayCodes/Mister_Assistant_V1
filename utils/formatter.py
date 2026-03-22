@@ -24,34 +24,34 @@ class Formatter:
     def format_info(text):
         return f"🤖 {text}"
 
-    def format_help(self):
+    def get_help_text(self):
         return (
-            "📚 **MISTER ASSISTANT: LIFE OS MANUAL**\n\n"
-            "📈 **ACTIVITY DOCUMENTATION**\n"
-            "• `starting coding` - Start a timer.\n"
-            "• `now gym` - Stop current and start new.\n"
-            "• `done` or `stop` - Finish tracking.\n"
-            "• `what am i doing?` - Check status.\n\n"
-            "📊 **ANALYTICS (Phase 4)**\n"
-            "• `/summary` - Today's report.\n"
-            "• `yesterday summary` - Past report.\n"
-            "• `last week summary` - Weekly report.\n\n"
-            "🕰️ **THE TIME MACHINE**\n"
-            "• `watched movie from 2pm to 4pm`\n"
-            "• `gym at 6am` (Assumes 1hr session)\n"
-            "• **Photo Retro**: Send Photo then caption: `Lunch at 1pm`.\n"
-            "• 🚩 Conflict Guard will block overlapping logs!\n\n"
-            "📸 **VISUAL EVIDENCE**\n"
-            "• Send a photo to start a 'Visual Session'.\n"
-            "• Caption later to link all pending photos.\n\n"
-            "💰 **FINANCE & SOCIAL**\n"
-            "• `spent 5000 on lunch` - Log expense.\n"
-            "• `My sister is Chichi` - Person memory.\n\n"
-            "🤖 **UTILITIES**\n"
-            "• `what time is it?` - Accurate time check.\n"
-            "• `/help` - Open this manual.\n"
-            "• `/reset_all_data` - Delete all my data.\n\n"
-            "🦾 *High Performance. Durable Memory. Accurate Timeline.*"
+            "🌟 **Mister Assistant: Your Self-Evolving Helper** 🌟\n\n"
+            "Hey! I'm here to help you track your life. I'm getting smarter every day! Here is how you talk to me:\n\n"
+            "🕒 **1. LOGGING TIME (Right Now)**\n"
+            "• `Starting Gym` - I'll start a timer for Gym.\n"
+            "• `Done Gym` or `Stop` - I'll stop the timer.\n"
+            "• `Switch to Lunch` - Stops Gym and starts Lunch instantly.\n\n"
+            "🕰️ **2. THE TIME MACHINE (Past Logs)**\n"
+            "• `Yesterday I was Coding at 3pm` - I'll log it at that exact time.\n"
+            "• `Yesterday I spent 2h on Housework` - I'll log a 2-hour block.\n"
+            "• `I was at the Gym from 10am to 12pm` - I'll log the full range.\n\n"
+            "💰 **3. TRACKING MONEY**\n"
+            "• `Spent 50 on Pizza` - I'll log a $50 expense.\n"
+            "• `Pizza cost 10` - Another way to log spending.\n\n"
+            "✏️ **4. FIXING MISTAKES**\n"
+            "• `Actually I was Gaming` - Changes your current activity.\n"
+            "• `Fix 6am` - I'll find what you did at 6am and let you change it!\n"
+            "• `Delete Hi` - I'll find 'Hi' and remove it forever.\n\n"
+            "🎓 **5. TEACHING ME (New!)**\n"
+            "• If you say something I don't know, I will ask you to **Teach** me.\n"
+            "• You can link your words to my features (like 'Start Activity').\n"
+            "• You can use **/cancel** any time to stop learning.\n\n"
+            "📊 **6. SUMMARIES & DATA**\n"
+            "• `/summary` - See everything you did today.\n"
+            "• `/reset_all_data` - Wipes my memory (needs a secret code!).\n"
+            "• `/cancel` - Stops whatever we are doing right now.\n\n"
+            "💡 **Remember:** Watch my `🤖 Status` at the bottom of my messages to see if I'm listening or learning!"
         )
 
     def format_summary(self, summary_data):
@@ -139,11 +139,42 @@ class Formatter:
             "Your summary has been adjusted!"
         )
 
-    def format_selection_menu(self, activities, time_str):
-        """Surgical Selection Rule 10: Resolve Ambiguity."""
-        res = f"🧐 **Multiple activities found at {time_str}:**\n\n"
-        for i, act in enumerate(activities):
-            start = datetime.fromisoformat(act['start']).strftime('%H:%M')
-            res += f"{i+1}. **{act['name']}** (Started {start})\n"
-        res += "\nReply with the **number** to fix, or /cancel."
-        return res
+    def format_learning_menu(self, phrase):
+        return (
+            "🎓 **I'M LEARNING...**\n"
+            "━━━━━━━━━━━━━━━━━━\n"
+            f"❓ **Unknown Phrase:** `{phrase}`\n\n"
+            "How should I handle this in the future?\n"
+            "1. **Start Activity** (e.g. 'Starting...')\n"
+            "2. **Stop Activity** (e.g. 'Done')\n"
+            "3. **Switch Activity** (e.g. 'Now...')\n"
+            "4. **Get Summary**\n"
+            "5. **Log Spending**\n"
+            "6. **Ignore**\n"
+            "━━━━━━━━━━━━━━━━━━\n"
+            "Reply with **number** to link or /cancel."
+        )
+
+    def format_footer(self, context=None):
+        if not context: return "\n\n`🤖 Status: Listening...`"
+        modes = {
+            "WAITING_FOR_CAPTION": "Waiting for Photo Caption 🖼️",
+            "WAITING_FOR_CORRECTION_SELECTION": "Waiting for Selection 🧐",
+            "WAITING_FOR_DELETION_SELECTION": "Waiting for Deletion Choice ⚠️",
+            "WAITING_FOR_LEARNING_INTENT": "Learning New Phrase... 🎓",
+            "WAITING_FOR_GENERALIZATION": "Refining Pattern Logic 🧬",
+            "WAITING_FOR_RESET_CODE": "Nuclear Authorization Required ☢️",
+        }
+        mode = modes.get(context, "Ready")
+        return f"\n\n`🤖 Mode: {mode}`"
+
+    def format_generalization_request(self, phrase):
+        return (
+            "🧬 **GENERALIZATION CHECK**\n"
+            "━━━━━━━━━━━━━━━━━━\n"
+            f"Phrase: `{phrase}`\n\n"
+            "Is there a **variable** part (like an activity name) in this phrase?\n\n"
+            "• If yes, **type the word** I should generalize (e.g. if the phrase is 'Deep in Gym', type `Gym`).\n"
+            "• If no, type **'Fixed'**.\n"
+            "━━━━━━━━━━━━━━━━━━"
+        )

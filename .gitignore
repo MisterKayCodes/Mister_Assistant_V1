@@ -9,26 +9,21 @@ htmlcov/
 # Environments
 .env
 .venv
-env/
 venv/
-ENV/
-env.bak/
-venv.bak/
+env/
+*.bak
 
 # Database
 *.db
 *.sqlite3
 
-# IDEs
+# Temp & IDE
+tmp/
 .vscode/
 .idea/
-
-# OS
 .DS_Store
 Thumbs.db
-
-# Backups
-*.bak
+.antigravity/
 
 # Logs
 logs/

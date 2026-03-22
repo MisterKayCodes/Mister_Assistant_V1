@@ -4,12 +4,12 @@ from config import DB_PATH
 from data.schema import SCHEMA_QUERIES
 from data.mixins import (
     ActivityMixin, StateMixin, SpendingMixin, 
-    PeopleMixin, ReminderMixin, MediaMixin
+    PeopleMixin, ReminderMixin, MediaMixin, LearningMixin
 )
 
 class Repository(
     ActivityMixin, StateMixin, SpendingMixin, 
-    PeopleMixin, ReminderMixin, MediaMixin
+    PeopleMixin, ReminderMixin, MediaMixin, LearningMixin
 ):
     def __init__(self):
         # One connection to rule them all (prevents nesting deadlocks)
@@ -46,6 +46,13 @@ class Repository(
             cursor.execute("ALTER TABLE activities ADD COLUMN photo_paths TEXT")
         except sqlite3.OperationalError: pass
             
+        try:
+            # For Phase 6: The Teacher
+            cursor.execute("ALTER TABLE user_state ADD COLUMN learning_text TEXT")
+            cursor.execute("ALTER TABLE user_state ADD COLUMN last_intent_linked TEXT")
+        except sqlite3.OperationalError: pass
+
+        self._init_learning()
         self.conn.commit()
 
     def clear_all_user_data(self, user_id):

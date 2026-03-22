@@ -14,13 +14,12 @@ engine = ResponseEngine(DB_PATH)
 
 @router.message(Command("help"))
 async def help_handler(message: types.Message):
-    await message.answer(fmt.format_help(), parse_mode="Markdown")
+    await message.answer(fmt.get_help_text(), parse_mode="Markdown")
 
 @router.message(Command("summary"))
 async def summary_command_handler(message: types.Message):
     user_id = str(message.from_user.id)
-    # We call the engine for consistency
-    await engine._handle_intent(message, user_id, {"intent": "summary", "period": "today"})
+    await engine.handle_intent_directly(message, user_id, {"intent": "summary", "period": "today"})
 
 @router.message(Command("start"))
 async def start_handler(message: types.Message):
