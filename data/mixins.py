@@ -151,23 +151,63 @@ class MediaMixin(BaseMixin):
         self.conn.commit()
         return cursor.lastrowid
 
-    def check_for_conflicts(self, user_id, start_time, end_time):
-        """Checks for any activity that overlaps with the given time range.
-           Rule 5 update (Lead Debugger): Ongoing tasks only conflict up until NOW.
-        """
+    def check_for_conflicts(self, user_id, start_time, end_time, exclude_id=None):
+        """Checks for overlaps. Rule 9: Can exclude an ID (Surgical Update)."""
         cursor = self.conn.cursor()
         now = datetime.now()
-        # Logic: (StartA < EndB) AND (EndA > StartB)
-        # For ongoing (end_time is NULL), we use min(now, end_proposed) as its virtual end for comparison
-        # Actually simplest SQL: end_time IS NULL -> compare with now
+        query = """SELECT id, name FROM activities 
+                   WHERE user_id = ? 
+                   AND datetime(start_time) < datetime(?) 
+                   AND datetime(COALESCE(end_time, ?)) > datetime(?)"""
+        params = [user_id, end_time, now, start_time]
+        
+        if exclude_id:
+            query += " AND id != ?"
+            params.append(exclude_id)
+            
+        cursor.execute(query, tuple(params))
+        return [{"id": row[0], "name": row[1]} for row in cursor.fetchall()]
+
+    def find_activities_at_time(self, user_id, timestamp):
+        """Surgical Search Rule 10: Find what was happening at a specific time."""
+        cursor = self.conn.cursor()
+        # Find any activity where (start <= timestamp < end)
+        # For ongoing, end matches 'now'
+        now = datetime.now()
         cursor.execute(
-            """SELECT name FROM activities 
+            """SELECT id, name, start_time, end_time FROM activities 
                WHERE user_id = ? 
-               AND datetime(start_time) < datetime(?) 
-               AND datetime(COALESCE(end_time, ?)) > datetime(?)""",
-            (user_id, end_time, now, start_time)
+               AND datetime(start_time) <= datetime(?) 
+               AND datetime(COALESCE(end_time, ?)) >= datetime(?)""",
+            (user_id, timestamp, now, timestamp)
         )
-        return [row[0] for row in cursor.fetchall()]
+        return [{"id": row[0], "name": row[1], "start": row[2], "end": row[3]} for row in cursor.fetchall()]
+
+    def update_activity(self, activity_id, name=None, start=None, end=None):
+        """मास्टर आर्किटेक्ट (Master Architect) Rule 12: Atomic Update with Rollback."""
+        cursor = self.conn.cursor()
+        # 1. Get current state for rollback/diff
+        cursor.execute("SELECT user_id, name, start_time, end_time FROM activities WHERE id = ?", (activity_id,))
+        old = cursor.fetchone()
+        if not old: return None
+        
+        uid, old_name, old_start, old_end = old
+        new_name = name if name else old_name
+        new_start = start if start else old_start
+        new_end = end if end else old_end
+        
+        # 2. Re-trigger Conflict Engine (Rule 1)
+        conflicts = self.check_for_conflicts(uid, new_start, new_end, exclude_id=activity_id)
+        if conflicts:
+            return {"status": "conflict", "conflicts": conflicts}
+            
+        # 3. Update
+        cursor.execute(
+            "UPDATE activities SET name = ?, start_time = ?, end_time = ? WHERE id = ?",
+            (new_name, new_start, new_end, activity_id)
+        )
+        self.conn.commit()
+        return {"status": "success", "old": old, "new": (uid, new_name, new_start, new_end)}
 
     def check_path_exists(self, relative_path):
         cursor = self.conn.cursor()
