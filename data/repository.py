@@ -30,9 +30,22 @@ class Repository(
         try:
             cursor.execute("ALTER TABLE user_state ADD COLUMN state_context TEXT")
         except sqlite3.OperationalError: pass
+
+        try:
+            # For 2-Step Reset Safety (Phase 4)
+            cursor.execute("ALTER TABLE user_state ADD COLUMN reset_code INTEGER")
+        except sqlite3.OperationalError: pass
         
         try:
             cursor.execute("ALTER TABLE activities ADD COLUMN photo_paths TEXT")
         except sqlite3.OperationalError: pass
             
+        self.conn.commit()
+
+    def clear_all_user_data(self, user_id):
+        """ मास्टर आर्किटेक्ट (Master Architect) Rule 9: The Nuclear Reset. """
+        cursor = self.conn.cursor()
+        tables = ["activities", "spending", "people", "reminders", "user_state"]
+        for table in tables:
+            cursor.execute(f"DELETE FROM {table} WHERE user_id = ?", (user_id,))
         self.conn.commit()
