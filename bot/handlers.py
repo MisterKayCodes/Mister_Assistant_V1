@@ -11,6 +11,30 @@ logic = Logic()
 repo = Repository()
 manager = MediaManager()
 
+@router.message(Command("help"))
+async def help_handler(message: types.Message):
+    await message.answer(
+        "📚 **Mister Assistant Multi-Modal Manual**\n\n"
+        "Here is how you can use my High-Trust Features:\n\n"
+        "📈 **Activity Documentation**\n"
+        "- `starting coding` - start a timer\n"
+        "- `now gym` - stop old activity and start a new one\n"
+        "- `what am i doing?` - check current status\n"
+        "- `done` or `stop` - finish an activity\n\n"
+        "📸 **Visual Evidence (Phase 2)**\n"
+        "- **Send a Photo** - I'll save it and wait for a caption.\n"
+        "- **Caption later** - Send text like 'Lunch' to link pending photos.\n"
+        "- **Multi-Photo** - Send many at once; I'll collect them all silently.\n"
+        "- `/cancel` - reset the photo memory queue.\n\n"
+        "💰 **Financial & Social**\n"
+        "- `spent 5000 on pizza` - log spending\n"
+        "- `My sister is Chichi` - remember relationships\n\n"
+        "🔔 **Tasks & Reminders**\n"
+        "- `remind me to pay bills at 18:00`\n"
+        "- `remind me to check oven in 10 minutes`\n\n"
+        "🦾 *I am designed for High Performance and Durable Memory.*"
+    )
+
 @router.message(Command("start"))
 async def start_handler(message: types.Message):
     user_id = str(message.from_user.id)
@@ -18,7 +42,7 @@ async def start_handler(message: types.Message):
     repo.clear_pending_media(user_id)
     repo.update_user_state(user_id, state_context=None)
     print(f"DEBUG: /start command received from {user_id}")
-    await message.answer("🤖 **Mister Assistant Phase 2 Online!**\n\nI can now see and remember. Send me a photo to log an activity with visual evidence, or just chat as usual!")
+    await message.answer("🤖 **Mister Assistant Phase 2 Online!**\n\nI can now see and remember. Send me a photo to log an activity with visual evidence, or use `/help` to see everything I can do!")
 
 # --- NEW PHOTO HANDLER (The Ears) ---
 @router.message(F.photo)

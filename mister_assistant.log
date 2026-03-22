@@ -229,3 +229,21 @@ sqlite3.OperationalError: table activities has no column named photo_paths
 2026-03-22 03:00:07,128 - aiogram.dispatcher - INFO - Start polling
 2026-03-22 03:00:09,465 - aiogram.dispatcher - INFO - Run polling for bot @misterassistantloyalbot id=8392026795 - 'Mister Assistant'
 2026-03-22 03:00:16,222 - aiogram.event - INFO - Update id=852457730 is handled. Duration 3219 ms by bot id=8392026795
+2026-03-22 03:04:29,050 - aiogram.dispatcher - INFO - Start polling
+2026-03-22 03:04:30,722 - aiogram.dispatcher - INFO - Run polling for bot @misterassistantloyalbot id=8392026795 - 'Mister Assistant'
+2026-03-22 03:05:59,555 - aiogram.dispatcher - INFO - Polling stopped
+2026-03-22 03:05:59,572 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ServerDisconnectedError: Server disconnected
+2026-03-22 03:05:59,580 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8392026795)
+2026-03-22 03:06:13,195 - aiogram.dispatcher - INFO - Start polling
+2026-03-22 03:06:15,235 - aiogram.dispatcher - INFO - Run polling for bot @misterassistantloyalbot id=8392026795 - 'Mister Assistant'
+2026-03-22 03:06:34,965 - aiogram.event - INFO - Update id=852457731 is handled. Duration 2219 ms by bot id=8392026795
+2026-03-22 03:06:54,187 - aiogram.event - INFO - Update id=852457732 is handled. Duration 327 ms by bot id=8392026795
+2026-03-22 03:07:31,313 - aiogram.event - INFO - Update id=852457733 is handled. Duration 359 ms by bot id=8392026795
+2026-03-22 03:07:38,634 - aiogram.event - INFO - Update id=852457734 is handled. Duration 984 ms by bot id=8392026795
+2026-03-22 03:08:04,782 - aiogram.event - INFO - Update id=852457735 is handled. Duration 327 ms by bot id=8392026795
+2026-03-22 03:08:18,214 - aiogram.event - INFO - Update id=852457736 is handled. Duration 313 ms by bot id=8392026795
+2026-03-22 03:08:27,364 - aiogram.event - INFO - Update id=852457737 is handled. Duration 329 ms by bot id=8392026795
+2026-03-22 03:08:41,630 - aiogram.event - INFO - Update id=852457738 is handled. Duration 375 ms by bot id=8392026795
+2026-03-22 03:08:57,094 - aiogram.event - INFO - Update id=852457739 is handled. Duration 359 ms by bot id=8392026795
+2026-03-22 03:09:27,648 - aiogram.event - INFO - Update id=852457740 is handled. Duration 327 ms by bot id=8392026795
+2026-03-22 03:09:43,613 - aiogram.event - INFO - Update id=852457741 is handled. Duration 407 ms by bot id=8392026795

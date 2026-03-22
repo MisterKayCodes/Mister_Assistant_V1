@@ -51,10 +51,23 @@ class Parser:
                 "category": spent_match.group("category").strip()
             }
 
-        # Reminders
-        remind_match = re.search(r"remind me to (?P<task>.+?) (?P<time>tomorrow|next week|at \d+:\d+)", text)
+        # Reminders (Natural & Relative)
+        remind_match = re.search(r"remind me to (?P<task>.+?) (?P<time>tomorrow|next week|at \d+:\d+|in \d+ minutes?)", text)
         if remind_match:
-            return {"intent": "set_reminder", "text": remind_match.group("task"), "time": remind_match.group("time")}
+            task = remind_match.group("task")
+            time_raw = remind_match.group("time")
+            
+            # Simple Relative Resolver
+            if "in" in time_raw and "minute" in time_raw:
+                try:
+                    mins = int(re.search(r"\d+", time_raw).group())
+                    from datetime import datetime, timedelta
+                    future = datetime.now() + timedelta(minutes=mins)
+                    time_raw = future.strftime("%H:%M today")
+                except:
+                    pass
+            
+            return {"intent": "set_reminder", "text": task, "time": time_raw}
 
         return None
 
