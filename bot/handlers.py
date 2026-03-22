@@ -93,6 +93,27 @@ async def telegram_handler(message: types.Message):
     state = repo.get_user_state(user_id)
     if state.get("state_context") == "WAITING_FOR_CAPTION":
         # Rule 5: Idempotency / JSON Serialization handled in Repo
+        # Senior Check: Does the caption have a retro-time?
+        parsed_caption = parser.parse(f"i {text}") # Try parsing as Retro-Log
+        if parsed_caption and parsed_caption.get("intent") in ["retro_log", "retro_log_start_only"]:
+            # Multimodal Retro-Log logic
+            name = parsed_caption.get("name")
+            start = parsed_caption.get("start")
+            end = parsed_caption.get("end") or (start + timedelta(hours=1))
+            
+            conflicts = repo.check_for_conflicts(user_id, start, end)
+            if conflicts:
+                await message.reply(f"⚠️ **Temporal Conflict!** You were already doing `{conflicts[0]}` at that time. Should I overwrite it (coming soon) or skip?")
+                return
+            
+            # Log with photos
+            photos = repo.get_pending_media(user_id)
+            repo.log_retro_activity(user_id, name, start, end, photos)
+            repo.clear_pending_media(user_id)
+            repo.update_user_state(user_id, state_context=None)
+            await message.answer(f"✅ Historically logged: **{name}** ({start.strftime('%H:%M')} - {end.strftime('%H:%M')})")
+            return
+
         repo.complete_activity_with_media(user_id, text)
         await message.answer(f"✅ Activity logged with visual evidence: **{text}**")
         return
@@ -143,6 +164,27 @@ async def telegram_handler(message: types.Message):
             response = logic.format_check_message(name)
         else:
             response = "🤖 You're not tracking anything right now."
+
+    elif intent == "retro_log":
+        start, end, name = parsed.get("start"), parsed.get("end"), parsed.get("name")
+        conflicts = repo.check_for_conflicts(user_id, start, end)
+        if conflicts:
+            response = f"⚠️ **Conflict:** You already logged `{conflicts[0]}` during that window."
+        else:
+            repo.log_retro_activity(user_id, name, start, end)
+            response = f"✅ Historically logged: **{name}** ({start.strftime('%H:%M')} to {end.strftime('%H:%M')})"
+
+    elif intent == "retro_log_start_only":
+        start, name = parsed.get("start"), parsed.get("name")
+        # For start-only, we'll ask for duration or default to 1h
+        # But for MVP, let's log as 1 hour and tell the user
+        end = start + timedelta(hours=1)
+        conflicts = repo.check_for_conflicts(user_id, start, end)
+        if conflicts:
+            response = f"⚠️ **Conflict:** `{conflicts[0]}` is already in that time slot."
+        else:
+            repo.log_retro_activity(user_id, name, start, end)
+            response = f"✅ Historically logged: **{name}** at {start.strftime('%H:%M')} (assumed 1 hour)."
 
     elif intent == "set_reminder":
         repo.set_reminder(user_id, parsed.get("text"), parsed.get("time"))

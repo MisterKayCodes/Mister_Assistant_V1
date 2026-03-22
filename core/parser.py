@@ -51,7 +51,7 @@ class Parser:
                 "category": spent_match.group("category").strip()
             }
 
-        # Reminders (Natural & Relative)
+# Reminders (Natural & Relative)
         remind_match = re.search(r"remind me to (?P<task>.+?) (?P<time>tomorrow|next week|at \d+:\d+|in \d+ minutes?)", text)
         if remind_match:
             task = remind_match.group("task")
@@ -82,6 +82,31 @@ class Parser:
                     friendly_time = f"{h}:{m} today"
 
             return {"intent": "set_reminder", "text": task, "time": iso_time, "friendly_time": friendly_time}
+
+        # --- RETRO-LOGGING SENSING (Rule 11) ---
+        import dateparser
+        # Patterns like: "I watched a movie from 2pm to 4pm" or "I ate at 1pm"
+        retro_match = re.match(r"(?i)i (?P<act>.+?) (?:at|from) (?P<time>.+)", text)
+        if retro_match:
+            activity = retro_match.group("act")
+            time_str = retro_match.group("time")
+            
+            # Handle "from X to Y" explicitly
+            if " to " in time_str:
+                parts = time_str.split(" to ")
+                start_dt = dateparser.parse(parts[0], settings={'PREFER_DATES_FROM': 'past'})
+                end_dt = dateparser.parse(parts[1], settings={'PREFER_DATES_FROM': 'past'})
+                if start_dt and end_dt:
+                    return {"intent": "retro_log", "name": activity, "start": start_dt, "end": end_dt}
+            
+            # Handle "at X"
+            dt = dateparser.parse(time_str, settings={'PREFER_DATES_FROM': 'past'})
+            if dt:
+                # Default to 1-hour session ending at that time (or starting?)
+                # Senior Decision: "at X" usually means the START of the session.
+                return {"intent": "retro_log_start_only", "name": activity, "start": dt}
+
+        return None
 
         return None
 

@@ -139,6 +139,31 @@ class MediaMixin(BaseMixin):
         self.update_user_state(user_id, current_activity_id=act_id, last_activity_name=name, state_context=None)
         return act_id
 
+    def log_retro_activity(self, user_id, name, start_time, end_time, photo_paths=None):
+        """Inserts a past activity directly into the history."""
+        cursor = self.conn.cursor()
+        paths_json = json.dumps(photo_paths or [])
+        duration = int((end_time - start_time).total_seconds())
+        cursor.execute(
+            "INSERT INTO activities (user_id, name, start_time, end_time, duration, photo_paths) VALUES (?, ?, ?, ?, ?, ?)",
+            (user_id, name, start_time, end_time, duration, paths_json)
+        )
+        self.conn.commit()
+        return cursor.lastrowid
+
+    def check_for_conflicts(self, user_id, start_time, end_time):
+        """Checks for any activity that overlaps with the given time range."""
+        cursor = self.conn.cursor()
+        # Overlap condition: (StartA < EndB) AND (EndA > StartB)
+        cursor.execute(
+            """SELECT name FROM activities 
+               WHERE user_id = ? 
+               AND datetime(start_time) < datetime(?) 
+               AND datetime(end_time) > datetime(?)""",
+            (user_id, end_time, start_time)
+        )
+        return [row[0] for row in cursor.fetchall()]
+
     def check_path_exists(self, relative_path):
         cursor = self.conn.cursor()
         cursor.execute("SELECT id FROM pending_media WHERE file_path = ?", (relative_path,))

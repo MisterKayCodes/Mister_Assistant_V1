@@ -262,3 +262,93 @@ sqlite3.OperationalError: table activities has no column named photo_paths
 2026-03-22 03:35:00,778 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientOSError: [WinError 1236] The network connection was aborted by the local system
 2026-03-22 03:35:00,986 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8392026795)
 2026-03-22 03:35:13,176 - aiogram.dispatcher - INFO - Connection established (tryings = 1, bot id = 8392026795)
+2026-03-22 03:36:09,511 - aiogram.dispatcher - INFO - Start polling
+2026-03-22 03:36:10,562 - aiogram.dispatcher - INFO - Run polling for bot @misterassistantloyalbot id=8392026795 - 'Mister Assistant'
+2026-03-22 03:46:22,007 - aiogram.event - INFO - Update id=852457745 is handled. Duration 1172 ms by bot id=8392026795
+2026-03-22 09:49:58,943 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
+2026-03-22 09:50:00,456 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8392026795)
+2026-03-22 09:50:03,177 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:03,373 - aiogram.dispatcher - WARNING - Sleep for 1.353432 seconds and try again... (tryings = 1, bot id = 8392026795)
+2026-03-22 09:50:05,088 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:05,184 - aiogram.dispatcher - WARNING - Sleep for 1.740002 seconds and try again... (tryings = 2, bot id = 8392026795)
+2026-03-22 09:50:07,179 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:07,297 - aiogram.dispatcher - WARNING - Sleep for 2.252394 seconds and try again... (tryings = 3, bot id = 8392026795)
+2026-03-22 09:50:09,861 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:09,929 - aiogram.dispatcher - WARNING - Sleep for 2.861187 seconds and try again... (tryings = 4, bot id = 8392026795)
+2026-03-22 09:50:13,015 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:13,113 - aiogram.dispatcher - WARNING - Sleep for 3.764274 seconds and try again... (tryings = 5, bot id = 8392026795)
+2026-03-22 09:50:16,890 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:16,891 - aiogram.dispatcher - WARNING - Sleep for 5.014049 seconds and try again... (tryings = 6, bot id = 8392026795)
+2026-03-22 09:50:21,913 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:21,913 - aiogram.dispatcher - WARNING - Sleep for 4.786021 seconds and try again... (tryings = 7, bot id = 8392026795)
+2026-03-22 09:50:26,877 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:26,878 - aiogram.dispatcher - WARNING - Sleep for 4.951603 seconds and try again... (tryings = 8, bot id = 8392026795)
+2026-03-22 09:50:31,832 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:31,834 - aiogram.dispatcher - WARNING - Sleep for 4.935607 seconds and try again... (tryings = 9, bot id = 8392026795)
+2026-03-22 09:50:36,772 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:36,773 - aiogram.dispatcher - WARNING - Sleep for 5.053387 seconds and try again... (tryings = 10, bot id = 8392026795)
+2026-03-22 09:50:41,829 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:41,830 - aiogram.dispatcher - WARNING - Sleep for 4.981716 seconds and try again... (tryings = 11, bot id = 8392026795)
+2026-03-22 09:50:46,821 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:46,823 - aiogram.dispatcher - WARNING - Sleep for 4.980213 seconds and try again... (tryings = 12, bot id = 8392026795)
+2026-03-22 09:50:51,808 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:51,809 - aiogram.dispatcher - WARNING - Sleep for 5.072258 seconds and try again... (tryings = 13, bot id = 8392026795)
+2026-03-22 09:50:56,886 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:50:56,887 - aiogram.dispatcher - WARNING - Sleep for 5.227965 seconds and try again... (tryings = 14, bot id = 8392026795)
+2026-03-22 09:51:02,126 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:51:02,127 - aiogram.dispatcher - WARNING - Sleep for 5.079570 seconds and try again... (tryings = 15, bot id = 8392026795)
+2026-03-22 09:51:07,211 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:51:07,223 - aiogram.dispatcher - WARNING - Sleep for 5.234786 seconds and try again... (tryings = 16, bot id = 8392026795)
+2026-03-22 09:51:12,471 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:51:12,473 - aiogram.dispatcher - WARNING - Sleep for 5.044777 seconds and try again... (tryings = 17, bot id = 8392026795)
+2026-03-22 09:51:17,521 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:51:17,521 - aiogram.dispatcher - WARNING - Sleep for 5.094544 seconds and try again... (tryings = 18, bot id = 8392026795)
+2026-03-22 09:51:22,618 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:51:22,618 - aiogram.dispatcher - WARNING - Sleep for 4.980534 seconds and try again... (tryings = 19, bot id = 8392026795)
+2026-03-22 09:51:27,602 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:51:27,602 - aiogram.dispatcher - WARNING - Sleep for 5.189420 seconds and try again... (tryings = 20, bot id = 8392026795)
+2026-03-22 09:51:32,796 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:51:32,797 - aiogram.dispatcher - WARNING - Sleep for 5.066431 seconds and try again... (tryings = 21, bot id = 8392026795)
+2026-03-22 09:51:37,865 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:51:37,866 - aiogram.dispatcher - WARNING - Sleep for 5.001217 seconds and try again... (tryings = 22, bot id = 8392026795)
+2026-03-22 09:51:42,871 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:51:42,872 - aiogram.dispatcher - WARNING - Sleep for 4.927362 seconds and try again... (tryings = 23, bot id = 8392026795)
+2026-03-22 09:51:47,801 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:51:47,802 - aiogram.dispatcher - WARNING - Sleep for 4.979125 seconds and try again... (tryings = 24, bot id = 8392026795)
+2026-03-22 09:51:52,785 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:51:52,786 - aiogram.dispatcher - WARNING - Sleep for 5.066774 seconds and try again... (tryings = 25, bot id = 8392026795)
+2026-03-22 09:51:57,854 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:51:57,855 - aiogram.dispatcher - WARNING - Sleep for 4.916208 seconds and try again... (tryings = 26, bot id = 8392026795)
+2026-03-22 09:52:02,779 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:52:02,780 - aiogram.dispatcher - WARNING - Sleep for 4.943221 seconds and try again... (tryings = 27, bot id = 8392026795)
+2026-03-22 09:52:07,728 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:52:07,729 - aiogram.dispatcher - WARNING - Sleep for 5.102286 seconds and try again... (tryings = 28, bot id = 8392026795)
+2026-03-22 09:52:12,834 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:52:12,835 - aiogram.dispatcher - WARNING - Sleep for 5.012219 seconds and try again... (tryings = 29, bot id = 8392026795)
+2026-03-22 09:52:17,851 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:52:17,852 - aiogram.dispatcher - WARNING - Sleep for 5.038634 seconds and try again... (tryings = 30, bot id = 8392026795)
+2026-03-22 09:52:22,896 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 09:52:22,897 - aiogram.dispatcher - WARNING - Sleep for 5.085322 seconds and try again... (tryings = 31, bot id = 8392026795)
+2026-03-22 10:05:00,967 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 10:05:00,999 - aiogram.dispatcher - WARNING - Sleep for 4.955917 seconds and try again... (tryings = 32, bot id = 8392026795)
+2026-03-22 10:05:05,982 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 10:05:06,002 - aiogram.dispatcher - WARNING - Sleep for 5.133255 seconds and try again... (tryings = 33, bot id = 8392026795)
+2026-03-22 10:05:11,287 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 10:05:11,465 - aiogram.dispatcher - WARNING - Sleep for 5.073445 seconds and try again... (tryings = 34, bot id = 8392026795)
+2026-03-22 10:05:16,616 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 10:05:16,638 - aiogram.dispatcher - WARNING - Sleep for 4.969418 seconds and try again... (tryings = 35, bot id = 8392026795)
+2026-03-22 10:05:21,619 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 10:05:21,622 - aiogram.dispatcher - WARNING - Sleep for 5.087969 seconds and try again... (tryings = 36, bot id = 8392026795)
+2026-03-22 10:05:26,713 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 10:05:26,714 - aiogram.dispatcher - WARNING - Sleep for 4.911211 seconds and try again... (tryings = 37, bot id = 8392026795)
+2026-03-22 10:05:31,628 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 10:05:31,630 - aiogram.dispatcher - WARNING - Sleep for 4.930446 seconds and try again... (tryings = 38, bot id = 8392026795)
+2026-03-22 10:05:36,565 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 10:05:36,565 - aiogram.dispatcher - WARNING - Sleep for 5.121749 seconds and try again... (tryings = 39, bot id = 8392026795)
+2026-03-22 10:05:41,689 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 10:05:41,691 - aiogram.dispatcher - WARNING - Sleep for 4.918510 seconds and try again... (tryings = 40, bot id = 8392026795)
+2026-03-22 10:05:46,615 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2026-03-22 10:05:46,697 - aiogram.dispatcher - WARNING - Sleep for 4.828627 seconds and try again... (tryings = 41, bot id = 8392026795)
+2026-03-22 10:06:03,675 - aiogram.dispatcher - INFO - Connection established (tryings = 42, bot id = 8392026795)
+2026-03-22 10:13:38,788 - aiogram.dispatcher - INFO - Start polling
+2026-03-22 10:13:41,614 - aiogram.dispatcher - INFO - Run polling for bot @misterassistantloyalbot id=8392026795 - 'Mister Assistant'
