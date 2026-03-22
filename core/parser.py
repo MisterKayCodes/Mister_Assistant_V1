@@ -52,12 +52,23 @@ class Parser:
             }
 
 # Reminders (Natural & Relative)
-        remind_match = re.search(r"remind me to (?P<task>.+?) (?P<time>tomorrow|next week|at \d+:\d+|in \d+ minutes?)", text)
+        remind_match = re.search(r"(?i)remind me to (?P<task>.+?) (?P<time>tomorrow|next week|at \d+:\d+|in \d+ minutes?)", text)
         if remind_match:
-            task = remind_match.group("task")
-            time_raw = remind_match.group("time")
-            friendly_time = time_raw
-            iso_time = time_raw
+            return {"intent": "set_reminder", "task": remind_match.group("task"), "time": remind_match.group("time")}
+
+        # Analytics (The Chronicler)
+        if "summary" in text.lower():
+            period = "today"
+            if "yesterday" in text.lower(): period = "yesterday"
+            elif "last week" in text.lower(): period = "last_week"
+            elif "this week" in text.lower() or "weekly" in text.lower(): period = "this_week"
+            elif "month" in text.lower(): period = "month"
+            return {"intent": "summary", "period": period}
+
+        if "delete all" in text.lower() and "data" in text.lower():
+            return {"intent": "reset_request"}
+            
+        return None
             
             # Simple Relative & Natural Resolver
             from datetime import datetime, timedelta
