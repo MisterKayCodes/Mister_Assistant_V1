@@ -1,24 +1,40 @@
-# Mister Assistant
+# Mister Assistant: Full User Manual 🦾
 
-This is a personal life tracker bot for Telegram. It handles activities, spending, people facts, and reminders through natural chat. The goal is to keep things simple—no rigid commands, just talk to it.
+Mister Assistant is a stateful productivity and life-tracking bot. It uses natural language processing and a persistent task engine to keep you accountable.
 
-### Core Features
-- Activity tracking: Start, stop, or switch tasks naturally.
-- Time machine: Log things you did yesterday or earlier today.
-- Money tracking: Quick logs for spending and categories.
-- Memory: Remembers facts about people you mention.
-- Learning: You can teach the bot new phrases if it doesn't understand something.
+## 🚀 1. Task Scheduler (Deep Focus)
+The headline feature. Start a timed session and get interactive reminders.
+- **Syntax**: `Tasks: Coding, Gym, Water | Duration: 2h`
+- **Commands**:
+  - `/status`: View your visual progress bar and checklist.
+  - `/history`: See your past performance.
+- **Interactive**: The bot pings you 30m before the end. You can use buttons to **Snooze (15m)**, **Finish All**, or **Cancel**.
 
-### Architecture
-The code follows a modular structure where every file is kept under 200 lines to maintain sanity.
-- bot/: Telegram handlers and engine.
-- core/: Logical parsers and processing.
-- data/: SQLite storage and mixins.
-- utils/: Helper functions and formatting.
+## 🕒 2. Activity Tracking
+Log what you are doing in real-time or look back at the past.
+- **Real-time**: `Starting Gym`, `Done`, `Switch to Work`.
+- **Retro-Log**: 
+  - `Yesterday I was Coding at 3pm`
+  - `I spent 2h on Housework earlier`
+  - `I was at the Gym from 10am to 12pm`
+- **Corrections**: `Actually I was Gaming` (fixes current) or `Fix 6am` (finds past entry).
 
-### Setup and Deployment
-1. Virtual Env: Run setup.bat or create your own venv and pip install -r requirements.txt.
-2. Configuration: Copy .env.example to .env and fill in your keys (Gemini/DeepSeek/Telegram).
-3. Run: Use run.bat for local development or python main.py for production.
+## 💰 3. Money & People
+Track your budget and your network.
+- **Money**: `Spent 50 on Pizza`, `Lunch cost 10`.
+- **People**: `Note: John is my Manager`. The bot will remember this forever.
+- **Reminders**: `Reminder: Call Mom at 6pm`.
 
-The database is SQLite (mister_assistant.db) and is automatically ignored by git. Make sure to back it up if you care about your data.
+## 🎓 4. Universal Teaching Protocol
+If you say something the bot doesn't know, it will ask you to **Teach** it.
+- **Options**: You can now map any phrase to 13 different internal functions (Tracking, Tasks, Money, Social, System).
+- **Example**: If you say "Gotta fly", you can teach the bot that this means **Stop Activity**.
+
+## 🛠️ 5. Technical Commands
+- `/summary`: Daily/Weekly productivity breakdown.
+- `/help`: Quick command reference.
+- `/cancel`: Stop any active learning or reset process.
+- `/reset_all_data`: Universal wipe (requires secret code).
+
+---
+*Created by the Mister Tech Protocol.*

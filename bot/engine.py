@@ -99,7 +99,13 @@ class ResponseEngine:
                 await message.answer(self.fmt.format_error("PROHIBITED OVERRIDE: This phrase contains core system 'marrow'. I cannot remap foundational commands.") + self.fmt.format_footer(), parse_mode="Markdown")
                 return
 
-            mapping = {1: "start_activity", 2: "stop_activity", 3: "switch_activity", 4: "summary", 5: "log_spending", 6: "ignore"}
+            mapping = {
+                1: "start_activity", 2: "stop_activity", 3: "switch_activity",
+                4: "retro_log", 5: "retro_log_start_only",
+                6: "add_tasks", 7: "task_status",
+                8: "log_spending", 9: "add_person", 10: "set_reminder",
+                11: "summary", 12: "tell_time", 13: "ignore"
+            }
             intent = mapping.get(choice)
             if intent == "ignore":
                 self.repo.update_user_state(user_id, state_context=None, learning_text=None)
