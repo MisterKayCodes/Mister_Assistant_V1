@@ -42,6 +42,10 @@ async def photo_handler(message: types.Message):
         repo.update_user_state(user_id, state_context="WAITING_FOR_CAPTION")
         await message.reply("📸 I've saved the photo! What activity is this for?")
 
+@router.callback_query()
+async def callback_handler(query: types.CallbackQuery):
+    await engine.handle_callback(query)
+
 @router.message()
 async def telegram_handler(message: types.Message):
     await engine.handle_message(message)

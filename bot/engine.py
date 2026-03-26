@@ -1,6 +1,6 @@
 from aiogram import types
 import re
-from bot.intents import ActivityIntents, SocialIntents, SystemIntents
+from bot.intents import ActivityIntents, SocialIntents, SystemIntents, TaskIntents
 from core.analytics import AnalyticsEngine
 from core.parser import Parser
 from core.logic import Logic
@@ -20,6 +20,9 @@ class ResponseEngine:
         self.activity_intents = ActivityIntents(self.repo, self.fmt, self.logic)
         self.social_intents = SocialIntents(self.repo, self.fmt, self.logic)
         self.system_intents = SystemIntents(self.repo, self.fmt, self.logic, self.analytics)
+        # Rule 12: Dependency Injection (Services)
+        from main import scheduler # Cyclic import guard
+        self.task_intents = TaskIntents(self.repo, self.fmt, self.logic, scheduler)
 
     async def handle_message(self, message: types.Message):
         user_id = str(message.from_user.id)
@@ -53,6 +56,11 @@ class ResponseEngine:
             await self._handle_learning_generalization(message, user_id, text, state)
         elif context == "WAITING_FOR_RESET_CODE":
             await self.system_intents.handle_reset_confirmation(message, user_id, text, state)
+        elif context == "WAITING_FOR_TASK_LOG":
+            # Senior Refinement #2: Batch Validation
+            task = self.repo.get_active_task_group(user_id)
+            if task: await self.task_intents.handle_validation(message, user_id, text, task)
+            else: self.repo.update_user_state(user_id, state_context=None)
         else:
             await self._handle_intent(message, user_id, text)
 
@@ -124,14 +132,15 @@ class ResponseEngine:
     async def _dispatch_intent(self, message, user_id, parsed):
         intent = parsed.get("intent")
         response = ""
-        for module in [self.activity_intents, self.social_intents, self.system_intents]:
-            method_name = f"intent_{intent.replace('activity', '').strip('_')}" 
+        # Rule 13: Modular Dispatcher
+        modules = [self.activity_intents, self.social_intents, self.system_intents, self.task_intents]
+        for module in modules:
+            method_name = f"intent_{intent}"
+            # Mapping legacy names
             if intent == "start_activity": method_name = "intent_start"
             elif intent == "stop_activity": method_name = "intent_stop"
             elif intent == "switch_activity": method_name = "intent_switch"
             elif intent == "delete_activity": method_name = "intent_delete"
-            
-            if not hasattr(module, method_name): method_name = f"intent_{intent}"
             
             if hasattr(module, method_name):
                 response = await getattr(module, method_name)(user_id, parsed)
@@ -142,3 +151,8 @@ class ResponseEngine:
         if response:
             state = self.repo.get_user_state(user_id)
             await message.answer(response + self.fmt.format_footer(state.get("state_context")), parse_mode="Markdown")
+
+    async def handle_callback(self, callback_query: types.CallbackQuery):
+        """Routes callback queries to the appropriate intent module."""
+        # Currently only task intents use callbacks
+        await self.task_intents.handle_callback(callback_query)

@@ -4,3 +4,5 @@ python-dotenv
 watchfiles
 aiogram
 dateparser
+apscheduler
+sqlalchemy

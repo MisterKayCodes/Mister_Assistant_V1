@@ -40,4 +40,25 @@ class RuleParser:
             elif "month" in text.lower(): period = "month"
             return {"intent": "summary", "period": period}
 
+        # Task Management (Senior Refinement #4: Input Flexibility)
+        # Pattern: Tasks: A, B, C | Duration: 4h
+        task_match = re.search(r"(?i)tasks:\s*(?P<list>.+?)\s*\|\s*duration:\s*(?P<dur>.+)", text)
+        if task_match:
+            task_list = [t.strip() for t in task_match.group("list").split(",")]
+            dur_str = task_match.group("dur").strip().lower()
+            
+            # Simple duration parser (Senior Refinement #4)
+            minutes = 0
+            match = re.search(r"(\d+)\s*(h|m|hour|min)", dur_str)
+            if match:
+                val = int(match.group(1))
+                unit = match.group(2)
+                if unit.startswith("h"): minutes = val * 60
+                else: minutes = val
+            elif dur_str.isdigit():
+                minutes = int(dur_str)
+                
+            if minutes > 0:
+                return {"intent": "add_tasks", "task_list": task_list, "duration_minutes": minutes}
+
         return None

@@ -60,5 +60,28 @@ SCHEMA_QUERIES = [
         file_path TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS tasks (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id BIGINT,
+        task_list TEXT, -- JSON array
+        duration_minutes INTEGER,
+        start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        end_time TIMESTAMP,
+        status TEXT DEFAULT 'pending', -- pending, completed, partial, failed
+        completed_indices TEXT -- JSON array
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS task_logs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        task_id INTEGER,
+        user_id BIGINT,
+        completed_items TEXT, -- JSON array
+        original_task_list TEXT, -- JSON array (Safety Guard #5)
+        notes TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
     """
 ]

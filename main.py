@@ -4,11 +4,15 @@ import logging
 from aiogram import Bot, Dispatcher, types
 from config import TELEGRAM_BOT_TOKEN
 from bot.handlers import router, repo # Import repo from handlers for the scheduler
+from services.scheduler_service import SchedulerService
 from utils.logger import setup_logging
 
 # Rule 10: Observability
 setup_logging()
 logger = logging.getLogger(__name__)
+
+# Global Scheduler Instance (Dependency Injection)
+scheduler: SchedulerService = None
 
 async def reminder_scheduler(bot: Bot):
     """Background heartbeat for reminders (Rule 7: Resilience)"""
@@ -34,6 +38,11 @@ async def main():
     bot = Bot(token=TELEGRAM_BOT_TOKEN)
     dp = Dispatcher()
     dp.include_router(router)
+    
+    # Initialize Scheduler (Senior Refinement)
+    global scheduler
+    scheduler = SchedulerService(bot, repo)
+    scheduler.start()
     
     # Start the Heartbeat (The Alarm Clock)
     asyncio.create_task(reminder_scheduler(bot))

@@ -4,12 +4,12 @@ from config import DB_PATH
 from data.schema import SCHEMA_QUERIES
 from data.mixins import (
     ActivityMixin, StateMixin, SpendingMixin, 
-    PeopleMixin, ReminderMixin, MediaMixin, LearningMixin
+    PeopleMixin, ReminderMixin, MediaMixin, LearningMixin, TaskMixin
 )
 
 class Repository(
     ActivityMixin, StateMixin, SpendingMixin, 
-    PeopleMixin, ReminderMixin, MediaMixin, LearningMixin
+    PeopleMixin, ReminderMixin, MediaMixin, LearningMixin, TaskMixin
 ):
     def __init__(self):
         # One connection to rule them all (prevents nesting deadlocks)
