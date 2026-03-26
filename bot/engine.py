@@ -69,6 +69,14 @@ class ResponseEngine:
     async def _handle_intent(self, message, user_id, text):
         parsed = self.parser.parse(text, user_id=user_id)
         if not parsed or parsed.get("intent") == "unknown":
+            # Senior Refinement: Implicit Context Guard
+            # If there's an active task, and the user sends numbers/all, assume validation
+            task = self.repo.get_active_task_group(user_id)
+            if task and (re.search(r"\d+", text) or text.lower().strip() == "all"):
+                if self.task_intents:
+                    await self.task_intents.handle_validation(message, user_id, text, task)
+                    return
+
             self.repo.update_user_state(user_id, state_context="WAITING_FOR_LEARNING_INTENT", learning_text=text)
             await message.answer(self.fmt.format_learning_menu(text) + self.fmt.format_footer("WAITING_FOR_LEARNING_INTENT"), parse_mode="Markdown")
             return
