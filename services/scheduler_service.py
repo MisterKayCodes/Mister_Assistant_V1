@@ -72,9 +72,15 @@ class SchedulerService:
 
 async def send_task_warning(task_id, user_id):
     """Sends an interactive warning with Inline Buttons."""
-    from main import bot, repo # Late import inside job (Pickle Safety)
+    from bot import session
+    from main import repo # Repository is still in main for now
     from bot.keyboards import get_task_warning_keyboard
     
+    bot = session.bot # Get the dynamic bot instance
+    if not bot:
+        logger.error("🚫 Still no bot instance during warning job!")
+        return
+
     task = repo.get_task_by_id(task_id)
     if not task or task['status'] != 'pending':
         return
@@ -94,8 +100,14 @@ async def send_task_warning(task_id, user_id):
 
 async def send_final_check(task_id, user_id):
     """Sends the final completion check message."""
-    from main import bot, repo # Late import inside job
+    from bot import session
+    from main import repo
     
+    bot = session.bot
+    if not bot:
+        logger.error("🚫 Still no bot instance during final check!")
+        return
+
     task = repo.get_task_by_id(task_id)
     if not task or task['status'] != 'pending':
         return

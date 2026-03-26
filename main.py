@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 # Global Scheduler Instance (Dependency Injection)
 scheduler: SchedulerService = None
-bot: Bot = None # Global Bot Instance for job access
+from bot import session # Shared bot instance
 # Repository is already imported from handlers, but we make it easier to reach
 from bot.handlers import repo
 
@@ -38,8 +38,8 @@ async def main():
         sys.exit(1)
 
     print("🤖 Mister Assistant Telegram Bot Starting...")
-    global bot
-    bot = Bot(token=TELEGRAM_BOT_TOKEN)
+    session.bot = Bot(token=TELEGRAM_BOT_TOKEN)
+    bot = session.bot # Local reference for convenience
     dp = Dispatcher()
     dp.include_router(router)
     

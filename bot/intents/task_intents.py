@@ -29,8 +29,8 @@ class TaskIntents:
         end_time = datetime.strptime(task['end_time'], "%Y-%m-%d %H:%M:%S.%f")
         response = f"🦾 **TASK SESSION STARTED!**\n\n"
         response += f"📋 **Items:** {', '.join(task_list)}\n"
-        response += f"⏳ **Duration:** {duration}m (Ends at {end_time.strftime('%H:%M')} server time)\n\n"
-        response += "I'll ping you 30 mins before the end to check your progress!"
+        response += f"⏳ **Duration:** {duration}m (Ends in {duration}m)\n\n"
+        response += f"💡 *Note: Reminders follow server time (Ends at {end_time.strftime('%H:%M')}).*"
         
         return self.fmt.format_success(response)
 
@@ -53,9 +53,15 @@ class TaskIntents:
         filled = round((percent / 100) * 10)
         bar = "▰" * filled + "▱" * (10 - filled)
         
+        remaining_sec = (end_time - now).total_seconds()
+        remaining_str = f"{int(remaining_sec // 60)}m left" if remaining_sec > 0 else "Time's up! 🏁"
+
         response = f"⏳ **CURRENT SESSION**\n"
         response += f"[{bar}] {percent}%\n"
-        response += f"🏁 **Ends at:** {end_time.strftime('%H:%M')} ({int((end_time - now).total_seconds() // 60)}m left)\n\n"
+        response += f"🏁 **Status:** {remaining_str}\n"
+        if remaining_sec > 0:
+            response += f"🕒 **Server End Time:** {end_time.strftime('%H:%M')}\n"
+        response += "\n"
         
         tasks = json.loads(task['task_list'])
         completed_indices = json.loads(task['completed_indices'] or "[]")
