@@ -13,6 +13,9 @@ logger = logging.getLogger(__name__)
 
 # Global Scheduler Instance (Dependency Injection)
 scheduler: SchedulerService = None
+bot: Bot = None # Global Bot Instance for job access
+# Repository is already imported from handlers, but we make it easier to reach
+from bot.handlers import repo
 
 async def reminder_scheduler(bot: Bot):
     """Background heartbeat for reminders (Rule 7: Resilience)"""
@@ -35,6 +38,7 @@ async def main():
         sys.exit(1)
 
     print("🤖 Mister Assistant Telegram Bot Starting...")
+    global bot
     bot = Bot(token=TELEGRAM_BOT_TOKEN)
     dp = Dispatcher()
     dp.include_router(router)
