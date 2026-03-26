@@ -3,7 +3,7 @@ import asyncio
 import logging
 from aiogram import Bot, Dispatcher, types
 from config import TELEGRAM_BOT_TOKEN
-from bot.handlers import router, repo # Import repo from handlers for the scheduler
+from bot.handlers import router, repo, engine # Import engine to inject scheduler
 from services.scheduler_service import SchedulerService
 from utils.logger import setup_logging
 
@@ -43,6 +43,9 @@ async def main():
     global scheduler
     scheduler = SchedulerService(bot, repo)
     scheduler.start()
+    
+    # Inject Scheduler into Engine (Dependency Injection Fix)
+    engine.set_scheduler(scheduler)
     
     # Start the Heartbeat (The Alarm Clock)
     asyncio.create_task(reminder_scheduler(bot))

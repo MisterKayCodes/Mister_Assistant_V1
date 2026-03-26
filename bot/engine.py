@@ -20,9 +20,7 @@ class ResponseEngine:
         self.activity_intents = ActivityIntents(self.repo, self.fmt, self.logic)
         self.social_intents = SocialIntents(self.repo, self.fmt, self.logic)
         self.system_intents = SystemIntents(self.repo, self.fmt, self.logic, self.analytics)
-        # Rule 12: Dependency Injection (Services)
-        from main import scheduler # Cyclic import guard
-        self.task_intents = TaskIntents(self.repo, self.fmt, self.logic, scheduler)
+        self.task_intents = None # Will be initialized via set_scheduler
 
     async def handle_message(self, message: types.Message):
         user_id = str(message.from_user.id)
@@ -135,6 +133,7 @@ class ResponseEngine:
         # Rule 13: Modular Dispatcher
         modules = [self.activity_intents, self.social_intents, self.system_intents, self.task_intents]
         for module in modules:
+            if module is None: continue # Skip if not initialized (e.g. TaskIntents before scheduler)
             method_name = f"intent_{intent}"
             # Mapping legacy names
             if intent == "start_activity": method_name = "intent_start"
@@ -154,5 +153,9 @@ class ResponseEngine:
 
     async def handle_callback(self, callback_query: types.CallbackQuery):
         """Routes callback queries to the appropriate intent module."""
-        # Currently only task intents use callbacks
-        await self.task_intents.handle_callback(callback_query)
+        if self.task_intents:
+            await self.task_intents.handle_callback(callback_query)
+
+    def set_scheduler(self, scheduler):
+        """Late injection to avoid cyclic imports."""
+        self.task_intents = TaskIntents(self.repo, self.fmt, self.logic, scheduler)
