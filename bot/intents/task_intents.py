@@ -29,7 +29,7 @@ class TaskIntents:
         end_time = datetime.strptime(task['end_time'], "%Y-%m-%d %H:%M:%S.%f")
         response = f"🦾 **TASK SESSION STARTED!**\n\n"
         response += f"📋 **Items:** {', '.join(task_list)}\n"
-        response += f"⏳ **Duration:** {duration}m (Ends at {end_time.strftime('%H:%M')})\n\n"
+        response += f"⏳ **Duration:** {duration}m (Ends at {end_time.strftime('%H:%M')} server time)\n\n"
         response += "I'll ping you 30 mins before the end to check your progress!"
         
         return self.fmt.format_success(response)

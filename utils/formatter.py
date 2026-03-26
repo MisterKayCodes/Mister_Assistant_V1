@@ -39,15 +39,18 @@ class Formatter:
             "💰 **3. TRACKING MONEY**\n"
             "• `Spent 50 on Pizza` - I'll log a $50 expense.\n"
             "• `Pizza cost 10` - Another way to log spending.\n\n"
-            "✏️ **4. FIXING MISTAKES**\n"
+            "🚀 **4. TASK SCHEDULER (New!)**\n"
+            "• `Tasks: Coding, Gym, Water | Duration: 2h` - Starts a timed session.\n"
+            "• `/status` - See your visual progress bar.\n"
+            "• `/history` - See what you completed in the past.\n\n"
+            "✏️ **5. FIXING MISTAKES**\n"
             "• `Actually I was Gaming` - Changes your current activity.\n"
             "• `Fix 6am` - I'll find what you did at 6am and let you change it!\n"
             "• `Delete Hi` - I'll find 'Hi' and remove it forever.\n\n"
-            "🎓 **5. TEACHING ME (New!)**\n"
+            "🎓 **6. TEACHING ME**\n"
             "• If you say something I don't know, I will ask you to **Teach** me.\n"
-            "• You can link your words to my features (like 'Start Activity').\n"
-            "• You can use **/cancel** any time to stop learning.\n\n"
-            "📊 **6. SUMMARIES & DATA**\n"
+            "• You can link your words to my features (like 'Start Activity').\n\n"
+            "📊 **7. SUMMARIES & DATA**\n"
             "• `/summary` - See everything you did today.\n"
             "• `/reset_all_data` - Wipes my memory (needs a secret code!).\n"
             "• `/cancel` - Stops whatever we are doing right now.\n\n"
@@ -164,6 +167,7 @@ class Formatter:
             "WAITING_FOR_LEARNING_INTENT": "Learning New Phrase... 🎓",
             "WAITING_FOR_GENERALIZATION": "Refining Pattern Logic 🧬",
             "WAITING_FOR_RESET_CODE": "Nuclear Authorization Required ☢️",
+            "WAITING_FOR_TASK_LOG": "Documenting Your Success 🦾",
         }
         mode = modes.get(context, "Ready")
         return f"\n\n`🤖 Mode: {mode}`"

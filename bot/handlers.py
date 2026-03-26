@@ -21,6 +21,16 @@ async def summary_command_handler(message: types.Message):
     user_id = str(message.from_user.id)
     await engine.handle_intent_directly(message, user_id, {"intent": "summary", "period": "today"})
 
+@router.message(Command("status", "stats"))
+async def status_command_handler(message: types.Message):
+    user_id = str(message.from_user.id)
+    await engine.handle_intent_directly(message, user_id, {"intent": "task_status"})
+
+@router.message(Command("history"))
+async def history_command_handler(message: types.Message):
+    user_id = str(message.from_user.id)
+    await engine.handle_intent_directly(message, user_id, {"intent": "task_history"})
+
 @router.message(Command("start"))
 async def start_handler(message: types.Message):
     user_id = str(message.from_user.id)
